@@ -1,0 +1,59 @@
+
+/*Navbar*/
+.nav-link{
+    font-size: larger;
+    font-weight:normal;
+    color: black;
+}
+
+.nav-link.active {
+    color: white !important;
+}
+.navbar-brand{
+    font-weight: bolder;
+    font-size:x-large;
+}
+.nav-item{
+    padding:0 10px 0 10px;
+    border-radius: 10px;
+}
+
+.nav-item.active {
+    background-color: black;
+}
+
+.nav-link:hover{
+    transition: ease-in-out 300ms;
+    color: white;
+}
+
+.card{
+    background-color: #f0f0f0;
+}
+/*Carousel*/
+.carousel-inner{
+    margin: 25px 0 25px 0;
+    max-height: 360px;
+    border-radius: 20px;
+}
+.carousel-control-prev-icon, .carousel-control-next-icon , .carousel-indicators button{
+    width: 50px;
+    height: 50px;
+    filter: invert(5);
+}
+
+/*Card*/
+
+.card-img-top {
+    width: 150px;  /* Set the width of the image */
+    height: 150px; /* Set the height of the image */
+    object-fit: cover; /* Ensure the image covers the area */
+    margin: 0 auto; /* Center the image horizontally */
+}
+
+/*Footer*/
+.footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
