@@ -44,76 +44,37 @@
 
 <!--Signup-->
 <div class="container mt-5">
-  <form method="POST" action="">
-      <div class="row justify-content-center">
-          <div class="col-xl-6 col-md-6 mb-2">
-              <div class="form-container p-3 rounded-3" style="background-color: #6295a2;">
-                  <div class="text-center mb-4">
-                      <p class="h4 form-header">Let's get started</p>
-                      <p class="text-light">Add your personal details to continue</p>
-                  </div>
-                  <div class="form-group pt-3">
-                      <label class="text-white">Name</label>
-                      <div class="row">
-                          <div class="col">
-                              <input type="text" class="form-control mt-2" placeholder="First Name" name="First Name" required>
-                          </div>
-                          <div class="col">
-                              <input type="text" class="form-control mt-2" placeholder="Last Name" name="Last Name" required>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="form-group pt-3">
-                      <label class="text-white">Address</label>
-                      <input type="text" class="form-control mt-2" placeholder="Enter your address" name="Address">
-                  </div>
-                  <div class="form-group pt-3">
-                      <label class="text-white">NIC</label>
-                      <input type="text" class="form-control mt-2" placeholder="Enter your NIC" name="NIC">
-                  </div>
-                  <div class="form-group pt-3">
-                      <label class="text-white">Date of Birth</label>
-                      <input type="date" class="form-control mt-2" placeholder="MM/DD/YYYY" name="DOB">
-                  </div>
-                  <div class="text-center pt-5">
-                      <button type="submit" class="btn btn-light">Next</button>
-                      <p></p>
-                  </div>
-              </div>
+  <div class="row justify-content-center">
+    <div class="col-xl-6 col-md-6 mb-2">
+      <img class="img-fluid rounded mx-auto d-block" loading="lazy" src="images/Login.jpg">
+    </div>
+    <div class="col-xl-6 col-md-6">
+      <form>
+        <div class="form-container p-5 rounded-3" style="background-color: #6295a2;">
+          <div class="text-center mb-4">
+            <p class="h4 form-header fw-bolder ">Welcome!</p>
+            <p class="text-light">Login with your details to continue</p>
           </div>
-          <div class="col-xl-6 col-md-6">
-              <div class="form-container p-3 rounded-3" style="background-color: #6295a2;">
-                  <div class="text-center mb-4">
-                      <p class="h4 form-header">Let's get started</p>
-                      <p class="text-light">Add your personal details to continue</p>
-                  </div>
-                  <div class="form-group pt-3">
-                      <label class="text-white">E-mail</label>
-                      <input type="email" id="email" class="form-control mt-2" placeholder="Enter your e-mail" name="Email" required>
-                  </div>
-                  <div class="form-group pt-3">
-                      <label class="text-white">Mobile Number</label>
-                      <input type="text" class="form-control mt-2" placeholder="Enter your mobile number" name="Mobile Number">
-                  </div>
-                  <div class="form-group pt-3">
-                      <label class="text-white">Create Password</label>
-                      <input type="password" class="form-control mt-2" placeholder="Enter your password" name="Password" required>
-                  </div>
-                  <div class="form-group pt-3">
-                      <label class="text-white">Confirm Password</label>
-                      <input type="password" class="form-control mt-2" placeholder="Re-enter your password" name="Confirm Password" required>
-                  </div>
-                  <div class="text-center pt-4">
-                      <button type="submit" class="btn btn-primary">Sign Up</button>
-                      <p class="mt-3 mb-0">Already have an account? <a href="login.html" class="text-decoration-none text-light">Log in</a></p>
-                  </div>
-              </div>
+          <div class="form-group pt-4">
+            <label class="text-white">E-mail</label>
+            <input type="email" id="email" class="form-control mt-2" name="Email" placeholder="Enter your e-mail">
           </div>
-      </div>
-  </form>
+          <div class="form-group pt-4">
+            <label class="text-white">Password</label>
+            <input type="password" class="form-control mt-2" name="Password" placeholder="Enter your password">
+          </div>
+          <div class="text-center pt-4">
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+          <p class="text-center pt-4">Don't have an Account? <a href="signup.html" class="text-decoration-none text-light">Sign Up</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
-    
+
+  
 <!--Footer-->
 
 <footer class="text-center text-lg-start pt-sm-1 mt-5" style="background-color: #6295a2; color: white;">
@@ -167,10 +128,5 @@
 </footer>
 
   <script src="js/bootstrap.min.js"></script>
-  <script>
-    function focusEmail() {
-      document.getElementById('email').focus();
-    }
-  </script>
 </body>
 </html>
