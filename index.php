@@ -21,28 +21,28 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-          <div class="collapse navbar-collapse" id="navbarScroll">
+        <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav ms-auto align-items-center">
               <li class="nav-item active">
-                <a class="nav-link active" href="index.html">Home</a>
+                <a class="nav-link active" href="index.php">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="about.php">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="doctors.html">Doctors</a>
+                <a class="nav-link" href="doctors.php">Doctors</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="my appointments.html">My Appointments</a>
+                <a class="nav-link" href="my appointments.php">My Appointments</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact us.html">Contact Us</a>
+                <a class="nav-link" href="contact us.php">Contact Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="signup.html"><button class="btn btn-primary" style="background-color: #130FEA; ">Signup</button></a>
+                <a class="nav-link" href="signup.php"><button class="btn btn-primary" style="background-color: #130FEA; ">Signup</button></a>
               </li>
             </ul>
-          </div>
+        </div>
     </div>
   </nav>
 
@@ -214,10 +214,10 @@
 
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0">
           <h6 class="text-uppercase fw-bold mb-3">About</h6>
-          <p class="mb-1"><a href="about.html" class="text-reset text-decoration-none">About Us</a></p>
-          <p class="mb-1"><a href="contact us.html" class="text-reset text-decoration-none">Contact Us</a></p>
-          <p class="mb-1"><a href="doctors.html" class="text-reset text-decoration-none">Our Doctors</a></p>
-          <p class="mb-1"><a href="#" class="text-reset text-decoration-none">The Company</a></p>
+          <p class="mb-1"><a href="about.php" class="text-reset text-decoration-none">About Us</a></p>
+          <p class="mb-1"><a href="contact us.php" class="text-reset text-decoration-none">Contact Us</a></p>
+          <p class="mb-1"><a href="doctors.php" class="text-reset text-decoration-none">Our Doctors</a></p>
+          <p class="mb-1"><a href="about.php" class="text-reset text-decoration-none">The Company</a></p>
         </div>
       </div>
     </div>

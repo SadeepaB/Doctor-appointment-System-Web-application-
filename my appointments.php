@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootsrap</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -20,63 +21,29 @@
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav ms-auto align-items-center">
               <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="index.php">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="about.php">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="doctors.html">Doctors</a>
+                <a class="nav-link" href="doctors.php">Doctors</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link active" href="my appointments.php">My Appointments</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="my appointments.html">My Appointments</a>
+                <a class="nav-link" href="contact us.php">Contact Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact us.html">Contact Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="signup.html"><button class="btn btn-primary" style="background-color: #130FEA; ">Signup</button></a>
+                <a class="nav-link" href="signup.php"><button class="btn btn-primary" style="background-color: #130FEA; ">Signup</button></a>
               </li>
             </ul>
         </div>
     </div>
   </nav>
 
-<!--Signup-->
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-xl-6 col-md-6 mb-2">
-      <img class="img-fluid rounded mx-auto d-block" loading="lazy" src="images/Login.jpg">
-    </div>
-    <div class="col-xl-6 col-md-6">
-      <form>
-        <div class="form-container p-5 rounded-3" style="background-color: #6295a2;">
-          <div class="text-center mb-4">
-            <p class="h4 form-header fw-bolder ">Welcome!</p>
-            <p class="text-light">Login with your details to continue</p>
-          </div>
-          <div class="form-group pt-4">
-            <label class="text-white">E-mail</label>
-            <input type="email" id="email" class="form-control mt-2" name="Email" placeholder="Enter your e-mail">
-          </div>
-          <div class="form-group pt-4">
-            <label class="text-white">Password</label>
-            <input type="password" class="form-control mt-2" name="Password" placeholder="Enter your password">
-          </div>
-          <div class="text-center pt-4">
-            <button type="submit" class="btn btn-primary">Login</button>
-          </div>
-          <p class="text-center pt-4">Don't have an Account? <a href="signup.html" class="text-decoration-none text-light">Sign Up</a></p>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-  
 <!--Footer-->
-
 <footer class="text-center text-lg-start pt-sm-1 mt-5" style="background-color: #6295a2; color: white;">
 
   <section class="">
@@ -101,10 +68,10 @@
 
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0">
           <h6 class="text-uppercase fw-bold mb-3">About</h6>
-          <p class="mb-1"><a href="about.html" class="text-reset text-decoration-none">About Us</a></p>
-          <p class="mb-1"><a href="contact us.html" class="text-reset text-decoration-none">Contact Us</a></p>
-          <p class="mb-1"><a href="doctors.html" class="text-reset text-decoration-none">Our Doctors</a></p>
-          <p class="mb-1"><a href="#" class="text-reset text-decoration-none">The Company</a></p>
+          <p class="mb-1"><a href="about.php" class="text-reset text-decoration-none">About Us</a></p>
+          <p class="mb-1"><a href="contact us.php" class="text-reset text-decoration-none">Contact Us</a></p>
+          <p class="mb-1"><a href="doctors.php" class="text-reset text-decoration-none">Our Doctors</a></p>
+          <p class="mb-1"><a href="about.php" class="text-reset text-decoration-none">The Company</a></p>
         </div>
       </div>
     </div>

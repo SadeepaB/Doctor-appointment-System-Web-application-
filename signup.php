@@ -1,9 +1,53 @@
+<?php
+session_start();
+include("connection.php");
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $first_name = $_POST['First_Name'];
+    $last_name = $_POST['Last_Name'];
+    $address = $_POST['Address'];
+    $nic = $_POST['NIC'];
+    $dob = $_POST['DOB'];
+    $email = $_POST['Email'];
+    $mobile_number = $_POST['Mobile_Number'];
+    $password = $_POST['Password'];
+    $confirm_password = $_POST['Confirm_Password'];
+
+    // Check if password and confirm password match
+    if ($password !== $confirm_password) {
+        echo "<script type='text/javascript'>alert('Passwords do not match');</script>";
+    } else {
+        // Check if email is unique
+        $email_check_query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
+        $result = mysqli_query($con, $email_check_query);
+        if (mysqli_num_rows($result) > 0) {
+            echo "<script type='text/javascript'>alert('Email is already registered');</script>";
+        } else {
+            // Hash the password before storing it
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            $query = "INSERT INTO users (first_name, last_name, address, nic, dob, email, mobile_number, password) VALUES ('$first_name', '$last_name', '$address', '$nic', '$dob', '$email', '$mobile_number', '$hashed_password')";
+            
+            if (mysqli_query($con, $query)) {
+                $_SESSION['registered'] = true;
+                header("Location: login.php");
+                exit();
+            } else {
+                echo "<script type='text/javascript'>alert('Error: " . mysqli_error($con) . "');</script>";
+            }
+        }
+    }
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bootsrap</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -20,22 +64,22 @@
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav ms-auto align-items-center">
               <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="index.php">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about.html">About</a>
+                <a class="nav-link" href="about.php">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="doctors.html">Doctors</a>
+                <a class="nav-link" href="doctors.php">Doctors</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="my appointments.html">My Appointments</a>
+                <a class="nav-link" href="my appointments.php">My Appointments</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="contact us.html">Contact Us</a>
+                <a class="nav-link" href="contact us.php">Contact Us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="signup.html"><button class="btn btn-primary" style="background-color: #130FEA; ">Signup</button></a>
+                <a class="nav-link" href="signup.php"><button class="btn btn-primary" style="background-color: #130FEA; ">Signup</button></a>
               </li>
             </ul>
         </div>
@@ -44,7 +88,7 @@
 
 <!--Signup-->
 <div class="container mt-5">
-  <form method="POST" action="">
+  <form method="POST" action="#">
       <div class="row justify-content-center">
           <div class="col-xl-6 col-md-6 mb-2">
               <div class="form-container p-3 rounded-3" style="background-color: #6295a2;">
@@ -56,10 +100,10 @@
                       <label class="text-white">Name</label>
                       <div class="row">
                           <div class="col">
-                              <input type="text" class="form-control mt-2" placeholder="First Name" name="First Name" required>
+                              <input type="text" class="form-control mt-2" placeholder="First Name" name="First_Name" required>
                           </div>
                           <div class="col">
-                              <input type="text" class="form-control mt-2" placeholder="Last Name" name="Last Name" required>
+                              <input type="text" class="form-control mt-2" placeholder="Last Name" name="Last_Name" required>
                           </div>
                       </div>
                   </div>
@@ -101,11 +145,11 @@
                   </div>
                   <div class="form-group pt-3">
                       <label class="text-white">Confirm Password</label>
-                      <input type="password" class="form-control mt-2" placeholder="Re-enter your password" name="Confirm Password" required>
+                      <input type="password" class="form-control mt-2" placeholder="Re-enter your password" name="Confirm_Password" required>
                   </div>
                   <div class="text-center pt-4">
                       <button type="submit" class="btn btn-primary">Sign Up</button>
-                      <p class="mt-3 mb-0">Already have an account? <a href="login.html" class="text-decoration-none text-light">Log in</a></p>
+                      <p class="mt-3 mb-0">Already have an account? <a href="login.php" class="text-decoration-none text-light">Log in</a></p>
                   </div>
               </div>
           </div>
@@ -140,10 +184,10 @@
 
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0">
           <h6 class="text-uppercase fw-bold mb-3">About</h6>
-          <p class="mb-1"><a href="about.html" class="text-reset text-decoration-none">About Us</a></p>
-          <p class="mb-1"><a href="contact us.html" class="text-reset text-decoration-none">Contact Us</a></p>
-          <p class="mb-1"><a href="doctors.html" class="text-reset text-decoration-none">Our Doctors</a></p>
-          <p class="mb-1"><a href="#" class="text-reset text-decoration-none">The Company</a></p>
+          <p class="mb-1"><a href="about.php" class="text-reset text-decoration-none">About Us</a></p>
+          <p class="mb-1"><a href="contact us.php" class="text-reset text-decoration-none">Contact Us</a></p>
+          <p class="mb-1"><a href="doctors.php" class="text-reset text-decoration-none">Our Doctors</a></p>
+          <p class="mb-1"><a href="about.php" class="text-reset text-decoration-none">The Company</a></p>
         </div>
       </div>
     </div>
