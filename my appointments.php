@@ -43,6 +43,192 @@
     </div>
   </nav>
 
+  <!--Appinment cards-->
+
+  <!--cars row 1-->
+  <div class="container">
+    <h1 class="text-center my-4" style="color: #6295a2;">My Appoinments</h1>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card text-left m-3">
+          <div class="card-header">
+            Booking Date: 2024.07.18<br>
+            Reference Number: oc-000-01
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Test Session</h5>
+            <p class="card-text">Appoinment Number: 01</p>
+            <p><b>Test Doctor</b><br>
+              Shedule date: 2024.07.20<br>
+              Starts: @18.00 (24h)</p>
+          </div>
+          <div class="card-footer text-body-secondary">
+            <a href="#" class="btn btn-primary">Cancel Booking</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card text-left m-3">
+          <div class="card-header">
+            Booking Date: 2024.07.18<br>
+            Reference Number: oc-000-02
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Test Session</h5>
+            <p class="card-text">Appoinment Number: 02</p>
+            <p><b>Test Doctor</b><br>
+              Shedule date: 2024.07.21<br>
+              Starts: @19.00 (24h)</p>
+          </div>
+          <div class="card-footer text-body-secondary">
+            <a href="#" class="btn btn-primary">Cancel Booking</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card text-left m-3">
+          <div class="card-header">
+            Booking Date: 2024.07.18<br>
+            Reference Number: oc-000-03
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Test Session</h5>
+            <p class="card-text">Appoinment Number: 03</p>
+            <p><b>Test Doctor</b><br>
+              Shedule date: 2024.07.22<br>
+              Starts: @20.00 (24h)</p>
+          </div>
+          <div class="card-footer text-body-secondary">
+            <a href="#" class="btn btn-primary">Cancel Booking</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <!--cars row 2-->
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card text-left m-3">
+          <div class="card-header">
+            Booking Date: 2024.07.18<br>
+            Reference Number: oc-000-01
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Test Session</h5>
+            <p class="card-text">Appoinment Number: 01</p>
+            <p><b>Test Doctor</b><br>
+              Shedule date: 2024.07.20<br>
+              Starts: @18.00 (24h)</p>
+          </div>
+          <div class="card-footer text-body-secondary">
+            <a href="#" class="btn btn-primary">Cancel Booking</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card text-left m-3">
+          <div class="card-header">
+            Booking Date: 2024.07.18<br>
+            Reference Number: oc-000-02
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Test Session</h5>
+            <p class="card-text">Appoinment Number: 02</p>
+            <p><b>Test Doctor</b><br>
+              Shedule date: 2024.07.21<br>
+              Starts: @19.00 (24h)</p>
+          </div>
+          <div class="card-footer text-body-secondary">
+            <a href="#" class="btn btn-primary">Cancel Booking</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card text-left m-3">
+          <div class="card-header">
+            Booking Date: 2024.07.18<br>
+            Reference Number: oc-000-03
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Test Session</h5>
+            <p class="card-text">Appoinment Number: 03</p>
+            <p><b>Test Doctor</b><br>
+              Shedule date: 2024.07.22<br>
+              Starts: @20.00 (24h)</p>
+          </div>
+          <div class="card-footer text-body-secondary">
+            <a href="#" class="btn btn-primary">Cancel Booking</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <!--cars row 3-->
+     <div class="row">
+      <div class="col-md-4">
+        <div class="card text-left m-3">
+          <div class="card-header">
+            Booking Date: 2024.07.18<br>
+            Reference Number: oc-000-01
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Test Session</h5>
+            <p class="card-text">Appoinment Number: 01</p>
+            <p><b>Test Doctor</b><br>
+              Shedule date: 2024.07.20<br>
+              Starts: @18.00 (24h)</p>
+          </div>
+          <div class="card-footer text-body-secondary">
+            <a href="#" class="btn btn-primary">Cancel Booking</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card text-left m-3">
+          <div class="card-header">
+            Booking Date: 2024.07.18<br>
+            Reference Number: oc-000-02
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Test Session</h5>
+            <p class="card-text">Appoinment Number: 02</p>
+            <p><b>Test Doctor</b><br>
+              Shedule date: 2024.07.21<br>
+              Starts: @19.00 (24h)</p>
+          </div>
+          <div class="card-footer text-body-secondary">
+            <a href="#" class="btn btn-primary">Cancel Booking</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card text-left m-3">
+          <div class="card-header">
+            Booking Date: 2024.07.18<br>
+            Reference Number: oc-000-03
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Test Session</h5>
+            <p class="card-text">Appoinment Number: 03</p>
+            <p><b>Test Doctor</b><br>
+              Shedule date: 2024.07.22<br>
+              Starts: @20.00 (24h)</p>
+          </div>
+          <div class="card-footer text-body-secondary">
+            <a href="#" class="btn btn-primary">Cancel Booking</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 <!--Footer-->
 <footer class="text-center text-lg-start pt-sm-1 mt-5" style="background-color: #6295a2; color: white;">
 
