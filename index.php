@@ -38,9 +38,27 @@
               <li class="nav-item">
                 <a class="nav-link" href="contact us.php">Contact Us</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="signup.php"><button class="btn btn-primary" style="background-color: #130FEA; ">Signup</button></a>
-              </li>
+              <?php
+                session_start(); // Start the session to access session variables
+
+                // Check if the user is logged in by checking a session variable
+                $isLoggedIn = isset($_SESSION['user_id']); // or any other condition to check login status
+
+                if ($isLoggedIn) {
+                    // Code to display if the user is logged in
+                    echo '<li class="nav-item d-flex align-items-center">';
+                    echo '    <a href="#"><img src="images/Profile.jpg" class="rounded-circle" alt="Profile Image" width="40" height="40"></a>';
+                    echo '    <a class="nav-link" href="logout.php"><button class="btn btn-light">Logout</button></a>'; // Logout should link to a logout page
+                    echo '</li>';
+                } else {
+                    // Code to display if the user is not logged in
+                    echo '<li class="nav-item">';
+                    echo '    <a class="nav-link" href="signup.php">';
+                    echo '        <button class="btn btn-primary" style="background-color: #130FEA;">Signup</button>';
+                    echo '    </a>';
+                    echo '</li>';
+                }
+              ?>
             </ul>
         </div>
     </div>
@@ -188,57 +206,8 @@
     </div>
   </div>
 
-<!--Footer-->
-
-<footer class="text-center text-lg-start pt-sm-1" style="background-color: #6295a2; color: white;">
-
-  <section class="">
-    <div class="container text-center text-md-start mt-1">
-      <div class="row mt-3">
-        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto">
-          <h6 class="fw-bold mb-3">
-            <img src="images/logo.png" width="50" height="40">Edoca
-          </h6>
-          <p class="mb-1">+94 11 123 4567</p>
-          <p class="mb-1">edoca@gmail.com</p>
-          <p class="mb-1">100/2 Passara road, Badulla</p>
-        </div>
-
-        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto">
-          <h6 class="fw-bold mb-3">Others</h6>
-          <p class="mb-1">Terms and Conditions</p>
-          <p class="mb-1">FAQ</p>
-          <p class="mb-1">Feedback</p>
-          <p class="mb-1">Privacy Policy</p>
-        </div>
-
-        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0">
-          <h6 class="text-uppercase fw-bold mb-3">About</h6>
-          <p class="mb-1"><a href="about.php" class="text-reset text-decoration-none">About Us</a></p>
-          <p class="mb-1"><a href="contact us.php" class="text-reset text-decoration-none">Contact Us</a></p>
-          <p class="mb-1"><a href="doctors.php" class="text-reset text-decoration-none">Our Doctors</a></p>
-          <p class="mb-1"><a href="about.php" class="text-reset text-decoration-none">The Company</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="d-flex justify-content-center justify-content-lg-between p-4 pt-0 border-bottom">
-    <div class="container">
-      <hr>
-      <div class="d-flex justify-content-between align-items-center">
-        <p class="text-start mb-0">2024 All Rights Reserved</p>
-        <div class="social-icons">
-          <a href="#" class="me-4 text-reset"><i class="fab fa-facebook"></i></a>
-          <a href="#" class="me-4 text-reset"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="me-4 text-reset"><i class="fab fa-google"></i></a>
-          <a href="#" class="me-4 text-reset"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="me-4 text-reset"><i class="fab fa-linkedin"></i></a>
-          <a href="#" class="me-4 text-reset"><i class="fab fa-github"></i></a>
-        </div>
-      </div>
-    </div>
-  </section>
-</footer>
+  <!-- Include the footer -->
+  <?php include('footer.php'); ?>
 
   <script src="js/bootstrap.min.js"></script>
 </body>
