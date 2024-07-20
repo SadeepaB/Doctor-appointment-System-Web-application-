@@ -35,9 +35,27 @@
               <li class="nav-item">
                 <a class="nav-link" href="contact us.php">Contact Us</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="signup.php"><button class="btn btn-primary" style="background-color: #130FEA; ">Signup</button></a>
-              </li>
+              <?php
+                session_start(); // Start the session to access session variables
+
+                // Check if the user is logged in by checking a session variable
+                $isLoggedIn = isset($_SESSION['user_id']); // or any other condition to check login status
+
+                if ($isLoggedIn) {
+                    // Code to display if the user is logged in
+                    echo '<li class="nav-item d-flex align-items-center">';
+                    echo '    <a href="#"><img src="images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>';
+                    echo '    <a class="nav-link" href="logout.php"><button class="btn btn-light">Logout</button></a>'; // Logout should link to a logout page
+                    echo '</li>';
+                } else {
+                    // Code to display if the user is not logged in
+                    echo '<li class="nav-item">';
+                    echo '    <a class="nav-link" href="signup.php">';
+                    echo '        <button class="btn btn-primary" style="background-color: #130FEA;">Signup</button>';
+                    echo '    </a>';
+                    echo '</li>';
+                }
+              ?>
             </ul>
         </div>
     </div>
