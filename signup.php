@@ -54,10 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 <body>
   <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
     <div class="container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="index.php">
             <img src="images/logo.png" alt="Logo" width="50" height="40">
         </a>
-        <a class="navbar-brand" href="index.html">Edoca</a>
+        <a class="navbar-brand" href="index.php">Edoca</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

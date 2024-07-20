@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body>
+  
   <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
     <div class="container">
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="index.php">
             <img src="images/logo.png" alt="Logo" width="50" height="40">
         </a>
-        <a class="navbar-brand" href="index.html">Edoca</a>
+        <a class="navbar-brand" href="index.php">Edoca</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -36,6 +37,7 @@
                 <a class="nav-link" href="contact us.php">Contact Us</a>
               </li>
               <?php
+<<<<<<< Updated upstream
                 session_start(); // Start the session to access session variables
 
                 // Check if the user is logged in by checking a session variable
@@ -49,6 +51,16 @@
                     echo '</li>';
                 } else {
                     // Code to display if the user is not logged in
+=======
+                session_start();
+                $isLoggedIn = isset($_SESSION['user_id']); 
+                if ($isLoggedIn) {
+                    echo '<li class="nav-item d-flex align-items-center">';
+                    echo '    <a href="#"><img src="images/User.png" class="rounded-circle" alt="Profile Image" width="40" height="40"></a>';
+                    echo '    <a class="nav-link" href="logout.php"><button class="btn btn-light">Logout</button></a>'; 
+                    echo '</li>';
+                } else {
+>>>>>>> Stashed changes
                     echo '<li class="nav-item">';
                     echo '    <a class="nav-link" href="signup.php">';
                     echo '        <button class="btn btn-primary" style="background-color: #130FEA;">Signup</button>';
