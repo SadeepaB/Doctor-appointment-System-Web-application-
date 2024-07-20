@@ -36,7 +36,6 @@
                 <a class="nav-link" href="contact us.php">Contact Us</a>
               </li>
               <?php
-<<<<<<< Updated upstream
                 session_start(); // Start the session to access session variables
 
                 // Check if the user is logged in by checking a session variable
@@ -50,16 +49,6 @@
                     echo '</li>';
                 } else {
                     // Code to display if the user is not logged in
-=======
-                session_start();
-                $isLoggedIn = isset($_SESSION['user_id']); 
-                if ($isLoggedIn) {
-                    echo '<li class="nav-item d-flex align-items-center">';
-                    echo '    <a href="#"><img src="images/User.png" class="rounded-circle" alt="Profile Image" width="40" height="40"></a>';
-                    echo '    <a class="nav-link" href="logout.php"><button class="btn btn-light">Logout</button></a>'; 
-                    echo '</li>';
-                } else {
->>>>>>> Stashed changes
                     echo '<li class="nav-item">';
                     echo '    <a class="nav-link" href="signup.php">';
                     echo '        <button class="btn btn-primary" style="background-color: #130FEA;">Signup</button>';
