@@ -1,3 +1,13 @@
+<?php
+session_start();
+include("connection.php"); // include your database connection file
+
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT * FROM users WHERE id = $user_id";
+$result = mysqli_query($con, $sql);
+$user = mysqli_fetch_assoc($result);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +18,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+<main class="flex-fill">
 
 <!--Navbar-->
 
@@ -39,7 +50,7 @@
                 <a class="nav-link" href="contact us.php">Contact Us</a>
               </li>
               <?php
-                session_start(); // Start the session to access session variables
+             
 
                 // Check if the user is logged in by checking a session variable
                 $isLoggedIn = isset($_SESSION['user_id']); // or any other condition to check login status
@@ -70,7 +81,7 @@
     <div class="main-body">
 
           <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4">
             <div class="card mt-lg-5">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
@@ -85,14 +96,14 @@
 
             </div>
             <div class="col-md-8">
-              <div class="card mb-5 mt-lg-5" style="transform: none;">
+              <div class="card  mt-lg-5" style="transform: none;">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0">First Name</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                     ####
+                    <?php echo $user['first_name']; ?>
                     </div>
                   </div>
                   <hr>
@@ -102,7 +113,7 @@
                       <h6 class="mb-0">Last Name</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      ####
+                      <?php echo $user['last_name']; ?>
                     </div>
                   </div>
 				          <hr>
@@ -112,7 +123,7 @@
                       <h6 class="mb-0">Address</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      ####
+                      <?php echo $user['address']; ?>
                     </div>
                   </div>
 				          <hr>
@@ -122,7 +133,7 @@
                       <h6 class="mb-0">NIC</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      ####
+                       <?php echo $user['nic']; ?>
                     </div>
                   </div>
                   <hr>
@@ -132,7 +143,7 @@
                       <h6 class="mb-0">Date of Birth</h6>
                     </div>
                     <div class="col-sm-9 text-secondary"> 
-					            ####
+                      <?php echo $user['dob']; ?>
                     </div>
                   </div>
                   <hr>
@@ -149,7 +160,7 @@
 
         </div>
     </div>
-
+</main>
     <!-- Include the footer -->
 	<?php include('footer.php'); ?>
 

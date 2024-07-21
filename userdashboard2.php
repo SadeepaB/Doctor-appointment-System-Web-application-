@@ -1,3 +1,36 @@
+<?php
+session_start();
+include("connection.php"); 
+
+$user_id = $_SESSION['user_id'];
+$sql = "SELECT * FROM users WHERE id = ?";
+$stmt = mysqli_prepare($con, $sql);
+mysqli_stmt_bind_param($stmt, 'i', $user_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$user = mysqli_fetch_assoc($result);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $firstName = htmlspecialchars($_POST['first_name']);
+    $lastName = htmlspecialchars($_POST['last_name']);
+    $address = htmlspecialchars($_POST['address']);
+    $nic =  htmlspecialchars($_POST['nic']);
+    $dob = htmlspecialchars($_POST['dob']);
+
+
+    $sql = "UPDATE users SET first_name = ?, last_name = ?, address = ?, nic = ?, dob = ? WHERE id = ?";
+    $stmt = mysqli_prepare($con, $sql);
+    mysqli_stmt_bind_param($stmt, 'sssssi', $firstName, $lastName, $address, $nic, $dob, $user_id);
+
+    if (mysqli_stmt_execute($stmt)) {
+        header("Location: userdashboard.php");
+        exit();
+    } else {
+        echo "Error: " . mysqli_error($con);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +41,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+<main class="flex-fill">
 
 <!--Navbar-->
 
@@ -39,7 +73,7 @@
                 <a class="nav-link" href="contact us.php">Contact Us</a>
               </li>
               <?php
-                session_start(); 
+               
 
                 
                 $isLoggedIn = isset($_SESSION['user_id']); 
@@ -83,14 +117,14 @@
 					</div>
 				</div>
 				<div class="col-lg-8">
-				   <div class="card mb-5 mt-lg-5" style="transform: none;">
+				   <div class="card mt-lg-5" style="transform: none;">
 						<div class="card-body">
 							<div class="row mb-3">
 								<div class="col-sm-3">
 									<h6 class="mb-0">First Name</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
-									<input type="text" class="form-control" value="#">
+									<input type="text" class="form-control" value="<?php echo $user['first_name']; ?>">
 								</div>
 							</div>
 
@@ -99,7 +133,7 @@
 	        	                     <h6 class="mb-0">Last Name</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
-									<input type="text" class="form-control" value="#">
+									<input type="text" class="form-control" value="<?php echo $user['last_name']; ?>">
 								</div>
 							</div>
 
@@ -108,7 +142,7 @@
 									<h6 class="mb-0">Address</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
-									<input type="text" class="form-control" value="#">
+									<input type="text" class="form-control" value="<?php echo $user['address']; ?>">
 								</div>
 							</div>
 
@@ -117,7 +151,7 @@
 									<h6 class="mb-0">NIC</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
-									<input type="text" class="form-control" value="#">
+									<input type="text" class="form-control" value="<?php echo $user['nic']; ?>">
 								</div>
 							</div>
 
@@ -126,14 +160,14 @@
 									<h6 class="mb-0">Date of Birth</h6>
 								</div>
 								<div class="col-sm-9 text-secondary">
-									<input type="text" class="form-control" value="#">
+									<input type="text" class="form-control" value="<?php echo $user['dob']; ?>">
 								</div>
 							</div>
 				
 							<div class="row">
 								<div class="col-sm-3"></div>
 								<div class="col-sm-9 text-secondary">
-									<input type="button" class="btn btn-primary px-4" value="Save Changes">
+								    <a href="userdashboard.php"><input type="button" class="btn btn-primary px-4" value="Save Changes"></a>
 								</div>
 							</div>
 						</div>
