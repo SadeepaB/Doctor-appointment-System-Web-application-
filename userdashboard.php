@@ -90,7 +90,7 @@ $user = mysqli_fetch_assoc($result);
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card mt-lg-5">
+                <div class="card mt-lg-5" style="transform: none;">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-3">
