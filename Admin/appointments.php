@@ -1,15 +1,13 @@
 <?php
 session_start();
 include("../connection.php");
-
-// Check if the admin is logged in
 if (!isset($_SESSION['admin_id'])) {
     header("Location: ../login.php");
     exit();
 }
-
 $isLoggedIn = isset($_SESSION['admin_id']);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,12 +18,10 @@ $isLoggedIn = isset($_SESSION['admin_id']);
     <link rel="stylesheet" href="styles.css">
     <title>Edoca Admin</title>
     <style>
-        .section {
-            display: none;
-        }
-        .active-section {
-            display: block;
-        }
+        .section {display: none;}
+        .active-section {display: block;}
+        .btn-primary {background-color: #007bff; color: white;}
+        .btn-secondary {background-color: #6c757d; color: white;}
     </style>
 </head>
 <body>
@@ -53,7 +49,7 @@ $isLoggedIn = isset($_SESSION['admin_id']);
                     <a class="nav-link" href="users.php">Users</a>
                   </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a href="../userdashboard.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
+                        <a href="admin_profile.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                     </li>
                 </ul>
@@ -73,20 +69,8 @@ $isLoggedIn = isset($_SESSION['admin_id']);
     <div id="upcomingAppointments" class="section active-section">
         <div class="row">
         <?php
-        include '../connection.php';
+            include '../connection.php';
 
-        if (!$isLoggedIn) {
-            echo "
-            <script>
-              document.addEventListener('DOMContentLoaded', function() {
-                  var loginModal = new bootstrap.Modal(document.getElementById('loginSignupModal'), {
-                      keyboard: false,
-                      backdrop: 'static'
-                  });
-                  loginModal.show();
-              });
-            </script>";
-        } else {
             if (isset($_GET['cancel_appointment_id'])) {
                 $appointmentIdToCancel = $_GET['cancel_appointment_id'];
                 $sql = "SELECT * FROM appointment WHERE appointment_id = ?";
@@ -108,6 +92,7 @@ $isLoggedIn = isset($_SESSION['admin_id']);
                     echo "<div class='alert alert-danger'>Invalid appointment or permission denied.</div>";
                 }
             }
+
             $sqlUpcoming = "SELECT 
                                 a.appointment_id,
                                 a.date AS booking_date,
@@ -144,8 +129,8 @@ $isLoggedIn = isset($_SESSION['admin_id']);
                     <div class='col-xl-4 col-md-6'>
                         <div class='card text-left m-3'>
                             <div class='card-header'>
-                              <h5 class='card-title'>Appointment Number: $appointmentId</h5>
-                              Booking Date: $createdDate<br>
+                            <h5 class='card-title'>Appointment Number: $appointmentId</h5>
+                            Booking Date: $createdDate<br>
                             </div>
                             <div class='card-body'>
                                 <h5 class='card-title'>Dr. $doctorName</h5>
@@ -163,9 +148,9 @@ $isLoggedIn = isset($_SESSION['admin_id']);
             } else {
                 echo "<p>No upcoming appointments found.</p>";
             }
-        }
-        $con->close();
+            $con->close();
         ?>
+
         </div>
     </div>
 
@@ -173,20 +158,8 @@ $isLoggedIn = isset($_SESSION['admin_id']);
     <div id="pastAppointments" class="section">
         <div class="row">
         <?php
-        include '../connection.php';
+            include '../connection.php';
 
-        if (!$isLoggedIn) {
-            echo "
-            <script>
-              document.addEventListener('DOMContentLoaded', function() {
-                  var loginModal = new bootstrap.Modal(document.getElementById('loginSignupModal'), {
-                      keyboard: false,
-                      backdrop: 'static'
-                  });
-                  loginModal.show();
-              });
-            </script>";
-        } else {
             $sqlPast = "SELECT 
                             a.appointment_id,
                             a.date AS booking_date,
@@ -194,15 +167,11 @@ $isLoggedIn = isset($_SESSION['admin_id']);
                             d.name AS doctor_name,
                             d.specialization,
                             d.hospital,
-                            u.first_name,
-                            u.last_name,
                             a.created_at
                         FROM 
                             appointment a
                         JOIN 
                             doctor d ON a.doctor_id = d.id
-                        JOIN 
-                            users u ON a.user_id = u.id
                         WHERE 
                             (a.date < CURDATE() OR (a.date = CURDATE() AND a.time < CURTIME()))
                         ORDER BY 
@@ -211,21 +180,20 @@ $isLoggedIn = isset($_SESSION['admin_id']);
             if ($resultPast->num_rows > 0) {
                 while($row = $resultPast->fetch_assoc()) {
                     $appointmentId = $row['appointment_id'];
-                    $bookingDate = $row['booking_date'];
+                    $createdAt = $row['created_at'];
                     $doctorName = $row['doctor_name'];
                     $specialization = $row['specialization'];
                     $hospital = $row['hospital'];
                     $scheduleDate = $row['booking_date'];
                     $time = $row['time'];
-                    $createdAt = $row['created_at'];
                     $dateTime = new DateTime($createdAt);
                     $createdDate = $dateTime->format('Y-m-d');
                     echo "
                     <div class='col-xl-4 col-md-6'>
                         <div class='card text-left m-3'>
                             <div class='card-header'>
-                              <h5 class='card-title'>Appointment Number: $appointmentId</h5>
-                              Booking Date: $createdDate<br>
+                            <h5 class='card-title'>Appointment Number: $appointmentId</h5>
+                            Booking Date: $createdDate<br>
                             </div>
                             <div class='card-body'>
                                 <h5 class='card-title'>Dr. $doctorName</h5>
@@ -243,8 +211,7 @@ $isLoggedIn = isset($_SESSION['admin_id']);
             } else {
                 echo "<p>No past appointments found.</p>";
             }
-        }
-        $con->close();
+            $con->close();
         ?>
         </div>
     </div>
@@ -269,32 +236,44 @@ $isLoggedIn = isset($_SESSION['admin_id']);
     </div>
   </div>
 
+    <!-- Include the footer -->
+    <?php include('footer.php'); ?>
+
+    <script src="js/bootstrap.min.js"></script>
   <!-- JavaScript to toggle between upcoming and past appointments -->
   <script src="../js/bootstrap.bundle.min.js"></script>
   <script>
-    document.getElementById('upcomingButton').addEventListener('click', function() {
-        document.getElementById('upcomingAppointments').classList.add('active-section');
-        document.getElementById('pastAppointments').classList.remove('active-section');
-    });
+        document.getElementById('upcomingButton').addEventListener('click', function() {
+            document.getElementById('upcomingAppointments').classList.add('active-section');
+            document.getElementById('pastAppointments').classList.remove('active-section');
+            this.classList.add('btn-primary');
+            this.classList.remove('btn-secondary');
+            document.getElementById('pastButton').classList.add('btn-secondary');
+            document.getElementById('pastButton').classList.remove('btn-primary');
+        });
 
-    document.getElementById('pastButton').addEventListener('click', function() {
-        document.getElementById('upcomingAppointments').classList.remove('active-section');
-        document.getElementById('pastAppointments').classList.add('active-section');
-    });
+        document.getElementById('pastButton').addEventListener('click', function() {
+            document.getElementById('upcomingAppointments').classList.remove('active-section');
+            document.getElementById('pastAppointments').classList.add('active-section');
+            this.classList.add('btn-primary');
+            this.classList.remove('btn-secondary');
+            document.getElementById('upcomingButton').classList.add('btn-secondary');
+            document.getElementById('upcomingButton').classList.remove('btn-primary');
+        });
 
-    // JavaScript to handle appointment cancellation
-    var confirmCancelModal = document.getElementById('confirmCancelModal');
-    var confirmCancelButton = document.getElementById('confirmCancelButton');
-    var appointmentIdToCancel;
+        // JavaScript to handle appointment cancellation
+        var confirmCancelModal = document.getElementById('confirmCancelModal');
+        var confirmCancelButton = document.getElementById('confirmCancelButton');
+        var appointmentIdToCancel;
 
-    confirmCancelModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;
-        appointmentIdToCancel = button.getAttribute('data-appointment-id');
-    });
+        confirmCancelModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            appointmentIdToCancel = button.getAttribute('data-appointment-id');
+        });
 
-    confirmCancelButton.addEventListener('click', function() {
-        window.location.href = 'appointments.php?cancel_appointment_id=' + appointmentIdToCancel;
-    });
-  </script>
+        confirmCancelButton.addEventListener('click', function() {
+            window.location.href = 'appointments.php?cancel_appointment_id=' + appointmentIdToCancel;
+        });
+    </script>
 </body>
 </html>

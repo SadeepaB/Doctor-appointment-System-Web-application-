@@ -1,17 +1,10 @@
 <?php
 session_start();
-include("../connection.php"); // Ensure the connection file is included
-
-// Check if the admin is logged in
-if (!isset($_SESSION['admin_id'])) {
-    // Redirect to the login page if not logged in as admin
+include("../connection.php");
+if (!isset($_SESSION['admin_id'])){
     header("Location: ../login.php");
     exit();
 }
-
-// Now you can safely use $_SESSION['admin_id'] and $_SESSION['admin_name']
-// The $isLoggedIn variable is redundant since the script exits if 'admin_id' is not set
-// Therefore, it's always true at this point and can be removed if not used later in the script
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +42,7 @@ if (!isset($_SESSION['admin_id'])) {
                     <a class="nav-link" href="users.php">Users</a>
                   </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a href="../userdashboard.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
+                        <a href="admin_profile.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                     </li>
                 </ul>
@@ -90,7 +83,7 @@ if (!isset($_SESSION['admin_id'])) {
       <div class="col-xl-3 col-md-6">
           <div class="card text-white mb-4" style="background-color: #6295a2;">
               <div class="card-body">
-                <a href="doctosr.php" class="text-decoration-none text-reset">
+                <a href="doctors.php" class="text-decoration-none text-reset">
                   <h5 class="card-title fw-bold">All Doctors</h5>
                   <h5 class="card-text fw-bold"><?php echo $doctorCount; ?></h5>
                   <i class="fas fa-user-md fa-3x" aria-hidden="true"></i>
