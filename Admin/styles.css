@@ -1,0 +1,49 @@
+
+/*Navbar*/
+.nav-link{
+    font-size: larger;
+    font-weight:normal;
+    color: black;
+}
+
+.nav-link.active {
+    color: white !important;
+}
+.navbar-brand{
+    font-weight: bolder;
+    font-size:x-large;
+}
+.nav-item{
+    padding:0 10px 0 10px;
+    border-radius: 10px;
+}
+
+.nav-item.active {
+    background-color: black;
+}
+
+.nav-link:hover{
+    transition: ease-in-out 300ms;
+    color: white;
+}
+
+/*Card*/
+
+.card-img-top {
+    width: 150px;  /* Set the width of the image */
+    height: 150px; /* Set the height of the image */
+    object-fit: cover; /* Ensure the image covers the area */
+    margin: 0 auto; /* Center the image horizontally */
+}
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+/*Footer*/
+.footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
