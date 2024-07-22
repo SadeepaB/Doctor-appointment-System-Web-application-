@@ -7,34 +7,73 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $password = isset($_POST['Password']) ? trim($_POST['Password']) : '';
 
     if (!empty($email) && !empty($password)) {
-        // Query to check if the email exists
+        // Function to verify password and set session
+        function verify_and_set_session($result, $password, $password_hashed = true) {
+            global $user; // Make $user available in the global scope
+            $user = mysqli_fetch_assoc($result);
+            $password_valid =password_verify($password, $user['password']);
+            if ($password_valid) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_email'] = $user['email'];
+                return true;
+            }
+            return false;
+        }
+
+        // Check in users table
         $query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
         $result = mysqli_query($con, $query);
 
         if (mysqli_num_rows($result) > 0) {
-            $user = mysqli_fetch_assoc($result);
-
-            // Verify the password
-            if (password_verify($password, $user['password'])) {
-                // Set session variables
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_email'] = $user['email'];
-                
-                // Redirect to a logged-in page
-                header("Location: index.php"); // Change to the page where logged-in users should be redirected
+            if (verify_and_set_session($result, $password)) {
+                // Redirect to the user logged-in page
+                header("Location: index.php");
                 exit();
             } else {
                 echo "<script type='text/javascript'>alert('Incorrect password');</script>";
             }
         } else {
-            echo "<script type='text/javascript'>alert('Email not registered');</script>";
+            // Check in doctor table
+            $query = "SELECT * FROM doctor WHERE email='$email' LIMIT 1";
+            $result = mysqli_query($con, $query);
+
+            if (mysqli_num_rows($result) > 0) {
+                if (verify_and_set_session($result, $password, false)) {
+                    // Set additional session variables for doctors
+                    $_SESSION['doctor_id'] = $user['id'];
+                    $_SESSION['doctor_name'] = $user['name'];
+                    // Redirect to the doctor logged-in page
+                    header("Location: Doctor/index.php");
+                    exit();
+                } else {
+                    echo "<script type='text/javascript'>alert('Incorrect password');</script>";
+                }
+            } else {
+                // Check in admin table
+                $query = "SELECT * FROM admin WHERE email='$email' LIMIT 1";
+                $result = mysqli_query($con, $query);
+
+                if (mysqli_num_rows($result) > 0) {
+                    if (verify_and_set_session($result, $password, false)) {
+                        // Set additional session variables for admin
+                        $_SESSION['admin_id'] = $user['admin_id'];
+                        $_SESSION['admin_name'] = $user['name'];
+                        // Redirect to the admin logged-in page
+                        header("Location: Admin/index.php");
+                        exit();
+                    } else {
+                        echo "<script type='text/javascript'>alert('Incorrect password');</script>";
+                    }
+                } else {
+                    echo "<script type='text/javascript'>alert('Email not registered');</script>";
+                }
+            }
         }
     } else {
         echo "<script type='text/javascript'>alert('Please fill in both fields');</script>";
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
