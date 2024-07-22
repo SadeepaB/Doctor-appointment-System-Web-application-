@@ -120,33 +120,7 @@
         </div>
     </div>
   </div>
-      <!-- <div class="col-md-6">
-            <div class="d-flex flex-column align-items-start">
-                <span class="fs-4 mb-3">Status</span>
-                <section class="status d-flex flex-wrap">
-                    <div class="status-item text-center p-4 bg-info text-white rounded m-2 status-item-width">
-                        <p>All Doctors</p>
-                        <p>26</p>
-                        <i class="bi bi-person-badge display-4"></i>
-                    </div>
-                    <div class="status-item text-center p-4 bg-info text-white rounded m-2 status-item-width">
-                        <p>All Patients</p>
-                        <p>35</p>
-                        <i class="bi bi-wheelchair display-4"></i>
-                    </div>
-                    <div class="status-item text-center p-4 bg-info text-white rounded m-2 status-item-width">
-                        <p>New Appointments</p>
-                        <p>26</p>
-                        <i class="bi bi-check2-circle display-4"></i>
-                    </div>
-                    <div class="status-item text-center p-4 bg-info text-white rounded m-2 status-item-width">
-                        <p>All Appointments</p>
-                        <p>26</p>
-                        <i class="bi bi-journal-text display-4"></i>
-                    </div>
-                </section>
-            </div>
-        </div> -->
+     
     </div>
   </div>
 
@@ -154,69 +128,69 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<!--
- <section class="vh-100">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-12 col-xl-4">
-
-        <div class="card" style="border-radius: 15px;">
-          <div class="card-body text-center">
-            <div class="mt-3 mb-4">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
-                class="rounded-circle img-fluid" style="width: 100px;" />
-            </div>
-            <h4 class="mb-2">Dr. Sanjeewa Kodithuwakku</h4>
-            <p class="text-muted mb-4">Specialized Cardiologist <span class="mx-2"></span> 
-            <
-            <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-rounded btn-lg">
-              Edit Profile
-            </button>
-            
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
+<div class="mt-5"></div>
+<div class="container">
+  <div class="text-center">
+    <span class="fs-4 mb-3"><strong>My Appointments</strong></span>
   </div>
-</section>
-              
+</div>
 
-  <main class="d-flex justify-content-between">
-  <span class="fs-4">Doctor Profile</span><span class="mx-2">
+<div class="mt-5"></div> <!-- Add a margin-top to create a gap -->
 
-            <section class="doctor-profile text-center p-4 bg-info text-white rounded">
-                <img src="doctor-profile.jpg" alt="Doctor Profile Picture" class="rounded-circle mb-3" style="width: 150px;">
-                <h2>Dr. Sanjeewa Kodithuwakku</h2>
-                <p>Specialized Cardiologist</p>
-                <button class="btn btn-primary">Edit Profile</button>
-            </section>
-            <span class="fs-4">Status</span><span class="mx-2">
+<div class="bd-example">
+  <table class="table table-striped table-hover" style="padding-left: 20px; padding-right: 20px;">
+      <thead>
+    <tr>
+      <th scope="col">Patient Name</th>
+      <th scope="col">Appointment Number</th>
+      <th scope="col">Date</th>
+      <th scope="col">Time</th>
+      <th scope="col">Event</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Geethaka Kalhara</td>
+      <td>01</td>
+      <td>2024/07/30</td>
+      <td>18.00PM</td>
+      <td><input class="btn btn-primary" type="reset" value="Cancel"></td>
+    </tr>
+    <tr>
+      <td>Sadeepa Bandara</td>
+      <td>02</td>
+      <td>2024/07/31</td>
+      <td>18.30PM</td>
+      <td><input class="btn btn-primary" type="reset" value="Cancel"></td>
+    </tr>
+    <tr>
+      <td>Udula Abishek</td>
+      <td>03</td>
+      <td>2024/07/31</td>
+      <td>10.00AM</td>
+      <td><input class="btn btn-primary" type="reset" value="Cancel"></td>
+    </tr>
+    <tr>
+      <th scope="row"><span style="font-weight: normal;">Thisara Kavinda</span></th>
+      <td>04</td>
+      <td>2024/07/31</td>
+      <td>13.30PM</td>
+      <td><input class="btn btn-primary" type="reset" value="Cancel"></td>
+    </tr>
+    <tr>
+    <th scope="row"><span style="font-weight: normal;">Lasitha Prasad</span></th>
+      <td>05</td>
+      <td>2024/07/31</td>
+      <td>16.00PM</td>
+      <td><input class="btn btn-primary" type="reset" value="Cancel"></td>
+    </tr>
+  </tbody>
 
-            <section class="status d-flex flex-wrap justify-content-around w-50" >
-                <div class="status-item text-center p-4 bg-info text-white rounded m-2">
-                    <p>All Doctors</p>
-                    <p>26</p>
-                    <i class="bi bi-person-badge display-4"></i>
-                </div>
-                <div class="status-item text-center p-4 bg-info text-white rounded m-2">
-                    <p>All Patients</p>
-                    <p>35</p>
-                    <i class="bi bi-wheelchair display-4"></i>
-                </div>
-                <div class="status-item text-center p-4 bg-info text-white rounded m-2">
-                    <p>New Appointments</p>
-                    <p>26</p>
-                    <i class="bi bi-check2-circle display-4"></i>
-                </div>
-                <div class="status-item text-center p-4 bg-info text-white rounded m-2">
-                    <p>All Appointments</p>
-                    <p>26</p>
-                    <i class="bi bi-journal-text display-4"></i>
-                </div>
-            </section>
-        </main>       -->
+  </table>
+</div>
+
+
+
   <!-- Include the footer -->
   <?php include('footer.php'); ?>
 
