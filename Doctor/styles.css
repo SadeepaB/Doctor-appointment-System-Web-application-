@@ -38,3 +38,8 @@
 .fs-4  {
     padding-left: 210px;
 }
+
+.img-hover:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s;
+}

@@ -12,6 +12,12 @@
         .status {
             max-width: 400px;
         }
+        .status-item, .doctor-profile {
+            transition: transform 0.3s ease;
+        }
+        .status-item:hover, .doctor-profile:hover {
+            transform: translateY(-10px);
+        }
     </style>
 </head>
 <body>
@@ -51,7 +57,7 @@
                 if ($isLoggedIn) {
                     // Code to display if the user is logged in
                     echo '<li class="nav-item d-flex align-items-center">';
-                    echo '    <a href="#"><img src="images/Profile.jpg" class="rounded-circle" alt="Profile Image" width="40" height="40"></a>';
+                    echo '    <a href="#"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>';
                     echo '    <a class="nav-link" href="logout.php"><button class="btn btn-light">Logout</button></a>'; // Logout should link to a logout page
                     echo '</li>';
                 } else {
@@ -70,11 +76,11 @@
 
 
   
-  <div class="container mt-5">
+  <div class="container mt-4">
     <div class="row">
       <div class="col-md-6">
         <div class="d-flex flex-column align-items-start">
-          <span class="fs-4 mb-3"><strong>Doctor Profile</strong></span>
+          <span class="fs-4 mb-4 "><strong>Doctor Profile</strong></span>
           <section class="doctor-profile text-center p-4  text-white rounded w-100" style="background-color:#6295a2;">
             <img src="../images/d-m-2.png" alt="Doctor Profile Picture" class="rounded-circle mb-3" style="width: 150px;">
             <h2>Dr. Sanjeewa Kodithuwakku</h2>
@@ -154,35 +160,35 @@
       <td>01</td>
       <td>2024/07/30</td>
       <td>18.00PM</td>
-      <td><input class="btn btn-primary" type="reset" value="Cancel"></td>
+      <td><button class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button></td>
     </tr>
     <tr>
       <td>Sadeepa Bandara</td>
       <td>02</td>
       <td>2024/07/31</td>
       <td>18.30PM</td>
-      <td><input class="btn btn-primary" type="reset" value="Cancel"></td>
+      <td><button class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button></td>
     </tr>
     <tr>
       <td>Udula Abishek</td>
       <td>03</td>
       <td>2024/07/31</td>
       <td>10.00AM</td>
-      <td><input class="btn btn-primary" type="reset" value="Cancel"></td>
+      <td><button class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button></td>
     </tr>
     <tr>
       <th scope="row"><span style="font-weight: normal;">Thisara Kavinda</span></th>
       <td>04</td>
       <td>2024/07/31</td>
       <td>13.30PM</td>
-      <td><input class="btn btn-primary" type="reset" value="Cancel"></td>
+      <td><button class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button></td>
     </tr>
     <tr>
     <th scope="row"><span style="font-weight: normal;">Lasitha Prasad</span></th>
       <td>05</td>
       <td>2024/07/31</td>
       <td>16.00PM</td>
-      <td><input class="btn btn-primary" type="reset" value="Cancel"></td>
+      <td><button class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button></td>
     </tr>
   </tbody>
 
