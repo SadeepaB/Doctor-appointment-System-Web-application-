@@ -137,8 +137,8 @@
 
 <div class="mt-5"></div> <!-- Add a margin-top to create a gap -->
 
-<div class="bd-example">
-  <table class="table table-striped table-hover" style="padding-left: 20px; padding-right: 20px;">
+<div class="bd-example" >
+  <table class="table table-striped table-hover">
       <thead>
     <tr>
       <th scope="col">Patient Name</th>

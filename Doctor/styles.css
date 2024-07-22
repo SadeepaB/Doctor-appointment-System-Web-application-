@@ -30,7 +30,11 @@
     height: 160px;
 }
 
-.table { 
-    padding-left: 20px;
-    padding-right: 20px;
-  }
+
+.bd-example {
+    padding-left: 90px;
+    padding-right: 90px;
+}
+.fs-4  {
+    padding-left: 210px;
+}
