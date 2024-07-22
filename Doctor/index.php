@@ -39,7 +39,7 @@
                 <a class="nav-link active" href="index.php">Dashboard</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about.php">My Appointments</a>
+                <a class="nav-link" href="myappoinment.php">My Appointments</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="doctors.php">My Patients</a>
@@ -58,7 +58,7 @@
                     // Code to display if the user is logged in
                     echo '<li class="nav-item d-flex align-items-center">';
                     echo '    <a href="#"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>';
-                    echo '    <a class="nav-link" href="logout.php"><button class="btn btn-light">Logout</button></a>'; // Logout should link to a logout page
+                    echo '    <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>'; // Logout should link to a logout page
                     echo '</li>';
                 } else {
                     // Code to display if the user is not logged in
@@ -125,15 +125,16 @@
             </div>
         </div>
     </div>
-  </div>
+   </div>
      
     </div>
-  </div>
+ </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+<div class="container mt-4">
 <div class="mt-5"></div>
 <div class="container">
   <div class="text-center">
@@ -194,7 +195,7 @@
 
   </table>
 </div>
-
+</div>
 
 
   <!-- Include the footer -->
