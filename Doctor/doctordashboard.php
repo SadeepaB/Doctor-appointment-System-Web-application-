@@ -42,7 +42,8 @@ $con->close();
 <body class="d-flex flex-column min-vh-100">
 <main class="flex-fill">
 
-<!-- Navbar -->
+<!--Navbar-->
+
 <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
     <div class="container">
         <a class="navbar-brand" href="index.html">
@@ -54,22 +55,38 @@ $con->close();
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav ms-auto align-items-center">
+              <li class="nav-item">
+                <a class="nav-link " href="index.php">Dashboard</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link " href="myappoinment.php">My Appointments</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link " href="patients.php">My Patients</a>
+              </li>
               <li class="nav-item active">
-                <a class="nav-link active" href="index.php">Home</a>
+                <a class="nav-link active" href="doctordashboard.php">Settings</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.php">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="doctors.php">Doctors</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="my_appointments.php">My Appointments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact_us.php">Contact Us</a>
-              </li>
-            
+              
+              <?php
+                // Check if the user is logged in by checking a session variable
+                $isLoggedIn = isset($_SESSION['user_id']); // or any other condition to check login status
+
+                if ($isLoggedIn) {
+                    // Code to display if the user is logged in
+                    echo '<li class="nav-item d-flex align-items-center">';
+                    echo '    <a href="doctordashboard.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>';
+                    echo '    <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>'; // Logout should link to a logout page
+                    echo '</li>';
+                } else {
+                    // Code to display if the user is not logged in
+                    echo '<li class="nav-item">';
+                    echo '    <a class="nav-link" href="signup.php">';
+                    echo '        <button class="btn btn-primary" style="background-color: #130FEA;">Signup</button>';
+                    echo '    </a>';
+                    echo '</li>';
+                }
+              ?>
             </ul>
         </div>
     </div>
@@ -83,7 +100,7 @@ $con->close();
                 <div class="card mt-lg-5">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="../images/profileicon.png" alt="Admin" class="rounded-circle" width="150">
+                        <img src="../images/profileicon.png" alt="Admin" class="rounded-circle" width="150">
                             <div class="mt-3">
                                 <h4><?php echo $doctor['name']; ?></h4>
                                 <p class="text-muted font-size-sm"><?php echo $doctor['specialization']; ?></p>

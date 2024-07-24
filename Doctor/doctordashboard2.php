@@ -11,7 +11,7 @@ if (!isset($_SESSION['doctor_id'])) {
 $doctor_id = $_SESSION['doctor_id'];
 
 // Initialize variables for form values
-$name = $specialization = $hospital = $email = "";
+$name = $specialization = $hospital = $email = $password = $new_password = "";
 $message = "";
 
 // Handle form submission
@@ -20,20 +20,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = htmlspecialchars($_POST['name']);
     $specialization = htmlspecialchars($_POST['specialization']);
     $hospital = htmlspecialchars($_POST['hospital']);
+    $new_password = htmlspecialchars($_POST['new_password']);
+    $confirm_password = htmlspecialchars($_POST['confirm_password']);
+
+    // Check if new password and confirm password match
+    if (!empty($new_password) && ($new_password === $confirm_password)) {
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+    } else {
+        $hashed_password = null;
+    }
 
     // Update the doctor details in the database
-    $sql = "UPDATE doctor SET name = ?, specialization = ?, hospital = ? WHERE id = ?";
-    $stmt = $con->prepare($sql);
-    $stmt->bind_param("sssi", $name, $specialization, $hospital, $doctor_id);
+    if ($hashed_password) {
+        $sql = "UPDATE doctor SET name = ?, specialization = ?, hospital = ?, password = ? WHERE id = ?";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("ssssi", $name, $specialization, $hospital, $hashed_password, $doctor_id);
+    } else {
+        $sql = "UPDATE doctor SET name = ?, specialization = ?, hospital = ? WHERE id = ?";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("sssi", $name, $specialization, $hospital, $doctor_id);
+    }
 
     if ($stmt->execute()) {
-        
-        header("Location: doctordashboard.php"); // Redirect to the same page to show the message
+        header("Location: doctordashboard.php"); // Redirect to the dashboard
         exit();
     } else {
         $_SESSION['message'] = "Error updating profile: " . $stmt->error;
-        header("Location: doctordashboard2.php"); // Redirect to the same page to show the message
-        exit();
     }
 
     $stmt->close();
@@ -73,9 +85,7 @@ $con->close();
 </head>
 <body class="d-flex flex-column min-vh-100">
 <main class="flex-fill">
-
-<!-- Navbar -->
-
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
     <div class="container">
         <a class="navbar-brand" href="index.html">
@@ -87,28 +97,43 @@ $con->close();
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav ms-auto align-items-center">
+              <li class="nav-item">
+                <a class="nav-link " href="index.php">Dashboard</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link " href="myappoinment.php">My Appointments</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link " href="patients.php">My Patients</a>
+              </li>
               <li class="nav-item active">
-                <a class="nav-link active" href="index.php">Home</a>
+                <a class="nav-link active" href="doctordashboard.php">Settings</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.php">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="doctors.php">Doctors</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="my_appointments.php">My Appointments</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact_us.php">Contact Us</a>
-              </li>
+              <?php
+                // Check if the user is logged in by checking a session variable
+                $isLoggedIn = isset($_SESSION['user_id']); // or any other condition to check login status
+
+                if ($isLoggedIn) {
+                    // Code to display if the user is logged in
+                    echo '<li class="nav-item d-flex align-items-center">';
+                    echo '    <a href="doctordashboard.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>';
+                    echo '    <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>'; // Logout should link to a logout page
+                    echo '</li>';
+                } else {
+                    // Code to display if the user is not logged in
+                    echo '<li class="nav-item">';
+                    echo '    <a class="nav-link" href="signup.php">';
+                    echo '        <button class="btn btn-primary" style="background-color: #130FEA;">Signup</button>';
+                    echo '    </a>';
+                    echo '</li>';
+                }
+              ?>
             </ul>
         </div>
     </div>
   </nav>
-
   <!-- Dashboard -->
-<div class="container">
+  <div class="container">
     <div class="main-body">
         <div class="row">
             <div class="col-lg-4">
@@ -152,11 +177,27 @@ $con->close();
                                     <input type="text" class="form-control" name="hospital" value="<?php echo htmlspecialchars($hospital); ?>">
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">New Password</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="password" class="form-control" name="new_password">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Confirm Password</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="password" class="form-control" name="confirm_password">
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-9 text-secondary">
-                                <input type="submit" class="btn btn-primary px-4" id="saveButton" value="Save Changes">
-                                <a href="doctordashboard.php" class="btn btn-secondary px-4 ms-2">Cancel</a>
+                                    <input type="submit" class="btn btn-primary px-4" id="saveButton" value="Save Changes">
+                                    <a href="doctordashboard.php" class="btn btn-secondary px-4 ms-2">Cancel</a>
                                 </div>
                             </div>
                             <?php if (isset($_SESSION['message'])): ?>
@@ -171,12 +212,12 @@ $con->close();
             </div>
         </div>
     </div>
-</div>
+  </div>
 
-<!-- Include the footer -->
-<?php include('footer.php'); ?>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
+  <!-- Include the footer -->
+  <?php include('footer.php'); ?>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('saveButton').addEventListener('click', function (event) {
             event.preventDefault(); // Prevent the form from submitting immediately
@@ -188,16 +229,12 @@ $con->close();
                 timer: 1500,
                 willClose: () => {
                     // Redirect after the alert is closed
-                    window.location.href = 'doctordashboard.php';
+                    document.forms[0].submit();
                 }
             });
-
-            // Submit the form programmatically after showing the alert
-            document.getElementById('myForm').submit();
         });
     });
-</script>
-
-<script src="../js/bootstrap.bundle.min.js"></script>
+  </script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
