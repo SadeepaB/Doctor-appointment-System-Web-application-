@@ -19,14 +19,14 @@ $doctor = $stmt->get_result()->fetch_assoc();
 $doctor_image = !empty($doctor['doctor_image']) ? $doctor['doctor_image'] : "../images/profileicon.png";
 
 // Handle appointment cancellation
-if (isset($_GET['cancel_appointment_id'])) {
-    $appointmentIdToCancel = $_GET['cancel_appointment_id'];
+if (isset($_GET['cancel_appointment_id']) && is_numeric($_GET['cancel_appointment_id'])) {
+    $appointmentIdToCancel = intval($_GET['cancel_appointment_id']);
     $sql = "DELETE FROM appointment WHERE appointment_id = ? AND doctor_id = ?";
     $stmt = $con->prepare($sql);
     $stmt->bind_param("ii", $appointmentIdToCancel, $doctor_id);
     $stmt->execute();
     if ($stmt->affected_rows > 0) {
-        $msg = "Appointment canceled successfully.";
+        
     } else {
         $msg = "Error canceling appointment.";
     }
@@ -158,7 +158,7 @@ $con->close();
                         <a class="nav-link" href="doctordashboard.php">Settings</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a href="doctordashboard.php"><img src="<?php echo htmlspecialchars($doctor_image); ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
+                        <a href="doctordashboard.php"><img src="<?php echo $doctor_image; ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;background-color: #000;"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                     </li>
                 </ul>
@@ -206,7 +206,7 @@ $con->close();
                                     <h6 class='card-text'>Schedule Time: $time</h6>
                                 </div>
                                 <div class='card-footer text-body-secondary'>
-                                    <button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#confirmCancelModal' data-appointment-id='$appointmentId'>Cancel Appointment</button>
+                                    <button class='btn btn-danger cancel-button' data-bs-toggle='modal' data-bs-target='#confirmCancelModal' data-appointment-id='$appointmentId'>Cancel Appointment</button>
                                 </div>
                             </div>
                         </div>";
@@ -270,7 +270,7 @@ $con->close();
             </div>
         </div>
     </div>
-    </main class="flex-fill">
+    </main>
     <!-- Include the footer -->
     <?php include('footer.php'); ?>
     <!-- JavaScript to handle section toggling -->
@@ -290,11 +290,11 @@ $con->close();
         });
 
         // Set the href of the cancel button in the modal
-        var cancelButtons = document.querySelectorAll('.btn-danger');
+        var cancelButtons = document.querySelectorAll('.cancel-button');
         cancelButtons.forEach(function(button) {
             button.addEventListener('click', function() {
                 var appointmentId = this.getAttribute('data-appointment-id');
-                document.getElementById('confirmCancelLink').href = 'appointment.php?cancel_appointment_id=' + appointmentId;
+                document.getElementById('confirmCancelLink').href = 'myappointment.php?cancel_appointment_id=' + appointmentId;
             });
         });
     </script>

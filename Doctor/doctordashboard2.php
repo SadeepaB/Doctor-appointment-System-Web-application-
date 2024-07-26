@@ -10,6 +10,7 @@ if (!isset($_SESSION['doctor_id'])) {
 
 $doctor_id = $_SESSION['doctor_id'];
 
+
 // Initialize variables for form values
 $name = $specialization = $hospital = $email = $password = $new_password = "";
 $message = "";
@@ -52,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Fetch doctor details
-$sql = "SELECT name, specialization, hospital, email FROM doctor WHERE id = ?";
+$sql = "SELECT name, specialization, hospital, email ,doctor_image FROM doctor WHERE id = ?";
 $stmt = $con->prepare($sql);
 $stmt->bind_param("i", $doctor_id);
 $stmt->execute();
@@ -110,7 +111,7 @@ $con->close();
                         <a class="nav-link active" href="doctordashboard.php">Settings</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a href="doctordashboard.php"><img src="<?php echo htmlspecialchars($doctor_image); ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
+                    <a href="doctordashboard.php"><img src="<?php echo $doctor['doctor_image']; ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;background-color: #000;"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                     </li>
                 </ul>
@@ -125,7 +126,7 @@ $con->close();
                 <div class="card mt-lg-5">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="../images/profileicon.png" alt="Profile Picture" class="rounded-circle" width="150">
+                        <img src="<?php echo $doctor['doctor_image']; ?>" alt="Admin" class="rounded-circle" width="150">
                             <div class="mt-3">
                                 <h4><?php echo htmlspecialchars($name); ?></h4>
                                 <p class="text-muted font-size-sm"><?php echo htmlspecialchars($email); ?></p>

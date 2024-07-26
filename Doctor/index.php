@@ -115,7 +115,7 @@ $con->close();
                         <a class="nav-link" href="doctordashboard.php">Settings</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a href="doctordashboard.php"><img src="<?php echo htmlspecialchars($doctor_image); ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
+                    <a href="doctordashboard.php"><img src="<?php echo $doctor['doctor_image']; ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;background-color: #000;"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                     </li>
                 </ul>
@@ -194,10 +194,7 @@ $con->close();
                         <td><?php echo htmlspecialchars($appointment['date']); ?></td>
                         <td><?php echo htmlspecialchars($appointment['time']); ?></td>
                         <td>
-                            <form method="post" action="index.php">
-                                <input type="hidden" name="appointment_id" value="<?php echo htmlspecialchars($appointment['appointment_id']); ?>">
-                                <button type="submit" class="btn btn-danger">Cancel</button>
-                            </form>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmCancelModal" data-id="<?php echo htmlspecialchars($appointment['appointment_id']); ?>">Cancel</button>
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -205,8 +202,41 @@ $con->close();
         </table>
     </div>
 </div>
-    <!-- Include the footer -->
-    <?php include('footer.php'); ?>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmCancelModal" tabindex="-1" aria-labelledby="confirmCancelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmCancelModalLabel">Confirm Cancellation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to cancel this appointment?
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="index.php">
+                    <input type="hidden" name="appointment_id" id="appointment_id">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Yes, Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include the footer -->
+<?php include('footer.php'); ?>
 <script src="../js/bootstrap.bundle.min.js"></script>
+<script>
+    // Set appointment ID in modal
+    var confirmCancelModal = document.getElementById('confirmCancelModal');
+    confirmCancelModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var appointmentId = button.getAttribute('data-id');
+        var inputAppointmentId = confirmCancelModal.querySelector('#appointment_id');
+        inputAppointmentId.value = appointmentId;
+    });
+</script>
 </body>
 </html>

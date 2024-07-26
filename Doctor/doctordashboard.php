@@ -68,8 +68,8 @@ $con->close();
                         <a class="nav-link active" href="doctordashboard.php">Settings</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a href="doctordashboard.php"><img src="<?php echo htmlspecialchars($doctor_image); ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
-                        <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
+                    <a href="doctordashboard.php"><img src="<?php echo $doctor['doctor_image']; ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;background-color: #000;"></a>
+                    <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                     </li>
                 </ul>
             </div>
@@ -84,7 +84,7 @@ $con->close();
                 <div class="card mt-lg-5">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                        <img src="../images/profileicon.png" alt="Admin" class="rounded-circle" width="150">
+                        <img src="<?php echo $doctor['doctor_image']; ?>" alt="Admin" class="rounded-circle" width="150">
                             <div class="mt-3">
                                 <h4><?php echo $doctor['name']; ?></h4>
                                 <p class="text-muted font-size-sm"><?php echo $doctor['specialization']; ?></p>
