@@ -1,78 +1,121 @@
+<?php
+session_start();
+include("../connection.php");
 
+if (!isset($_SESSION['doctor_id'])) {
+    header("Location: ../login.php");
+    exit();
+}
+$doctor_id = $_SESSION['doctor_id'];
+
+// Fetch patients for the logged-in doctor
+$patients_query = "SELECT 
+                        u.id,
+                        u.first_name, 
+                        u.last_name, 
+                        TIMESTAMPDIFF(YEAR, u.dob, CURDATE()) AS age 
+                    FROM 
+                        users u 
+                    JOIN 
+                        appointment a ON u.id = a.user_id 
+                    WHERE 
+                        a.doctor_id = ? 
+                    GROUP BY 
+                        u.id, u.first_name, u.last_name, u.dob";
+$stmt = $con->prepare($patients_query);
+$stmt->bind_param("i", $doctor_id);
+$stmt->execute();
+$patients_result = $stmt->get_result();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edoca</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
- 
+    <style>
+        .spinner-border {
+            margin-right: 10px;
+        }
+    </style>
+    <title>Edoca Doctor</title>
 </head>
 <body class="d-flex flex-column min-vh-100">
-<main class="flex-fill">
+    <main class="flex-fill">
+    <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">
+              <img src="../images/logo.png" alt="Logo" width="50" height="40">
+            </a>
+            <a class="navbar-brand" href="index.php">Edoca</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+              <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav ms-auto align-items-center">
+                  <li class="nav-item">
+                    <a class="nav-link" href="index.php">Dashboard</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="myappointment.php">Appointments</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link active" href="patients.php">My Patients</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="doctordashboard.php">Settings</a>
+                  </li>
+                  <li class="nav-item d-flex align-items-center">
+                      <a href="doctordashboard.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
+                      <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
+                  </li>
+                </ul>
+              </div>
+        </div>
+    </nav>
 
-<!--Navbar-->
-
-<nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">
-          <img src="../images/logo.png" alt="Logo" width="50" height="40">
-        </a>
-        <a class="navbar-brand" href="index.html">Edoca</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav ms-auto align-items-center">
-              <li class="nav-item">
-                <a class="nav-link " href="index.php">Dashboard</a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link " href="myappoinment.php">My Appointments</a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link active" href="patients.php">My Patients</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="doctordashboard.php">Settings</a>
-              </li>
-              
-              <?php
-                session_start(); // Start the session to access session variable
-                // Check if the user is logged in by checking a session variable
-                $isLoggedIn = isset($_SESSION['user_id']); // or any other condition to check login status
-
-                if ($isLoggedIn) {
-                    // Code to display if the user is logged in
-                    echo '<li class="nav-item d-flex align-items-center">';
-                    echo '    <a href="doctordashboard.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>';
-                    echo '    <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>'; // Logout should link to a logout page
-                    echo '</li>';
-                } else {
-                    // Code to display if the user is not logged in
-                    echo '<li class="nav-item">';
-                    echo '    <a class="nav-link" href="signup.php">';
-                    echo '        <button class="btn btn-primary" style="background-color: #130FEA;">Signup</button>';
-                    echo '    </a>';
-                    echo '</li>';
-                }
-              ?>
-            </ul>
+    <!-- Patients Table -->
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <h4 class="text-center">
+                <?php
+                    $patient_count = $patients_result->num_rows;
+                ?>
+                All Patients (<?php echo $patient_count; ?>)</h4>
+                <table class="table table-striped table-hover text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($patient = $patients_result->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($patient['first_name'] . ' ' . $patient['last_name']); ?></td>
+                                <td><?php echo htmlspecialchars($patient['age']); ?></td>
+                                <td>
+                                    <button class="btn btn-outline-primary view-appointments">
+                                        <i class="fas fa-eye"></i> View Appointments
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-  </nav>
 
-  <!---->
-  
-  
-</main>
-<?php include('footer.php'); ?>
-
-<script src="js/bootstrap.min.js"></script>
+    </main>
+    <!-- Include the footer -->
+    <?php include('footer.php'); ?>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </body>
 </html>
-
-
