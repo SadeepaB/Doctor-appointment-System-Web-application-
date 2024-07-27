@@ -46,8 +46,12 @@ $stmt->execute();
 $all_appointments_result = $stmt->get_result();
 $all_appointments = $all_appointments_result->fetch_assoc()['all_appointments'];
 
-// Fetch appointments
-$appointments_query = "SELECT a.*, u.first_name, u.last_name FROM appointment a JOIN users u ON a.user_id = u.id WHERE a.doctor_id = ? ORDER BY a.date, a.time";
+// Fetch upcoming appointments
+$appointments_query = "SELECT a.*, u.first_name, u.last_name 
+                       FROM appointment a 
+                       JOIN users u ON a.user_id = u.id 
+                       WHERE a.doctor_id = ? AND a.date > CURDATE() OR (a.date = CURDATE() AND a.time > CURRENT_TIME)
+                       ORDER BY a.date, a.time";
 $stmt = $con->prepare($appointments_query);
 $stmt->bind_param("i", $doctor_id);
 $stmt->execute();
@@ -115,7 +119,7 @@ $con->close();
                         <a class="nav-link" href="doctordashboard.php">Settings</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                    <a href="doctordashboard.php"><img src="<?php echo $doctor['doctor_image']; ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;background-color: #000;"></a>
+                        <a href="doctordashboard.php"><img src="<?php echo $doctor_image; ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;background-color: #000;"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                     </li>
                 </ul>
