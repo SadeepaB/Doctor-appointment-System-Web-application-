@@ -1,0 +1,113 @@
+<?php
+session_start();
+include("../connection.php");
+
+// Check if admin is logged in
+if (!isset($_SESSION['admin_id'])) {
+    header("Location: ../login.php");
+    exit();
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $feedback_id = $_POST['feedback_id'];
+    $reply = $_POST['reply'];
+
+    $stmt = $con->prepare("UPDATE feedback SET reply = ? WHERE id = ?");
+    $stmt->bind_param("si", $reply, $feedback_id);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Reply sent successfully!');</script>";
+    } else {
+        echo "<script>alert('Error: " . $stmt->error . "');</script>";
+    }
+
+    $stmt->close();
+}
+
+$feedback_query = "SELECT feedback.*, users.first_name, users.last_name FROM feedback JOIN users ON feedback.user_id = users.id";
+$feedback_result = $con->query($feedback_query);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edoca Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<main class="flex-fill">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
+    <div class="container">
+        <a class="navbar-brand" href="index.php">
+            <img src="../images/logo.png" alt="Logo" width="50" height="40">
+        </a>
+        <a class="navbar-brand" href="index.php">Edoca</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="appointments.php">Appointments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="doctors.php">Doctors</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="users.php">Users</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link active" href="feedback.php">Feedback</a>
+                </li>
+                <li class="nav-item d-flex align-items-center">
+                    <a href="admin_profile.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
+                    <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Feedback Section -->
+<div class="container mt-5">
+    <h2 class="text-primary mb-4">User Feedback</h2>
+    <?php while ($feedback = $feedback_result->fetch_assoc()): ?>
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title"><?= htmlspecialchars($feedback['first_name'] . ' ' . $feedback['last_name']) ?></h5>
+                <h6 class="card-subtitle mb-2 text-muted"><?= htmlspecialchars($feedback['user_email']) ?></h6>
+                <p class="card-text"><?= htmlspecialchars($feedback['message']) ?></p>
+                <?php if ($feedback['reply']): ?>
+                    <p class="card-text"><strong>Reply:</strong> <?= htmlspecialchars($feedback['reply']) ?></p>
+                <?php else: ?>
+                    <form method="post" action="">
+                        <input type="hidden" name="feedback_id" value="<?= $feedback['id'] ?>">
+                        <div class="mb-3">
+                            <label for="reply" class="form-label">Reply</label>
+                            <textarea class="form-control" id="reply" name="reply" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Reply</button>
+                    </form>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endwhile; ?>
+</div>
+
+</main>
+<!-- Include the footer -->
+<?php include('footer.php'); ?>
+
+<script src="../js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

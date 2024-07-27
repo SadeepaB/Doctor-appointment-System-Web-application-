@@ -20,9 +20,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-        $stmt = $con->prepare("INSERT INTO doctor (name, specialization, hospital, email, password) VALUES (?, ?, ?, ?, ?)");
+            // Handle file upload
+        $imagePath = '';
+        if (isset($_FILES['doctorImage']) && $_FILES['doctorImage']['error'] == UPLOAD_ERR_OK) {
+            $imageTmpName = $_FILES['doctorImage']['tmp_name'];
+            $imageName = basename($_FILES['doctorImage']['name']);
+            $imagePath = 'images/' . $imageName;
+            move_uploaded_file($imageTmpName, $imagePath);
+        }
+
+        $stmt = $con->prepare("INSERT INTO doctor (name, specialization, hospital, email, password, doctor_image) VALUES (?, ?, ?, ?, ?, ?)");
         if ($stmt) {
-            $stmt->bind_param("sssss", $doctorName, $specialization, $hospital, $email, $password);
+            $stmt->bind_param("ssssss", $doctorName, $specialization, $hospital, $email, $password, $imagePath);
 
             if ($stmt->execute()) {
                 $message = "Doctor added successfully.";
@@ -74,9 +83,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+// Handle search query
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+$searchTerm = mysqli_real_escape_string($con, $searchTerm);
+
 // Fetch doctors from the database
 $doctors = [];
 $query = "SELECT * FROM doctor";
+if ($searchTerm) {
+    $query .= " WHERE name LIKE '%$searchTerm%' OR specialization LIKE '%$searchTerm%' OR hospital LIKE '%$searchTerm%' OR email LIKE '%$searchTerm%'";
+}
 $result = $con->query($query);
 
 if ($result->num_rows > 0) {
@@ -101,6 +117,7 @@ if (isset($_GET['view_id'])) {
 $con->close();
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,7 +134,8 @@ $con->close();
         }
     </style>
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+<main class="flex-fill">
     <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
         <div class="container">
             <a class="navbar-brand" href="index.php">
@@ -141,6 +159,9 @@ $con->close();
                   <li class="nav-item">
                     <a class="nav-link" href="users.php">Users</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="feedback.php">Feedback</a>
+                  </li>
                     <li class="nav-item d-flex align-items-center">
                         <a href="admin_profile.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
@@ -150,13 +171,20 @@ $con->close();
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-5">
         <div class="row">
-        <div class="d-flex justify-content-center align-items-center ">
-            <h2 class="fw-bolder" style="color:#6295a2; margin-right: 20px;">Add New Doctor</h2>
-            <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addDoctorModal">
-                <i class="fas fa-plus"></i> Add Doctor
+        <div class="col-md-6 d-flex justify-content-center mb-3 mb-md-0">
+            <button class="btn btn-outline-primary btn-lg w-100" data-bs-toggle="modal" data-bs-target="#addDoctorModal">
+                <i class="fas fa-plus"></i><strong> Add New Doctor</strong>
             </button>
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+        <form class="w-100" method="GET" action="doctors.php">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" placeholder="Search doctors...">
+                <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search"></i> Search</button>
+            </div>
+        </form>
         </div>
         <?php if ($message): ?>
             <div class="alert alert-info text-center mt-3">
@@ -195,6 +223,10 @@ $con->close();
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="doctorImage" class="form-label">Doctor Image</label>
+                            <input type="file" class="form-control" id="doctorImage" name="doctorImage" accept="image/*">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -246,7 +278,7 @@ $con->close();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editDoctorForm" method="POST" action="">
+                    <form id="editDoctorForm" method="POST" action="" enctype="multipart/form-data">
                         <input type="hidden" id="editDoctorId" name="id">
                         <div class="mb-3">
                             <label for="editDoctorName" class="form-label">Doctor Name</label>
@@ -267,6 +299,10 @@ $con->close();
                         <div class="mb-3">
                             <label for="editPassword" class="form-label">Password (Leave blank to keep current password)</label>
                             <input type="password" class="form-control" id="editPassword" name="password" placeholder="Enter new password">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDoctorImage" class="form-label">Doctor Image (Leave blank to keep current image)</label>
+                            <input type="file" class="form-control" id="editDoctorImage" name="doctorImage" accept="image/*">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -339,7 +375,7 @@ $con->close();
         </div>
     </div>
 
-
+</main>
     <!-- Include the footer -->
     <?php include('footer.php'); ?>
 

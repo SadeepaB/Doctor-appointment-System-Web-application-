@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 <!--Doctor Searched Details--> 
-<div class="container mb-4 text-center">
+<div class="container mb-4 text-center" id="doctor-results">
     <div class="row g-4">
     <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && $result) {
@@ -224,6 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <?php include('footer.php'); ?>
 
   <script src="js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
   <script>
     function handleChannelNow(doctorId) {
@@ -238,6 +239,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         myModal.show();
     }
 }
+$(document).ready(function() {
+        <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $result && mysqli_num_rows($result) > 0): ?>
+            $('html, body').animate({
+                scrollTop: $('#doctor-results').offset().top - 60
+            }, 500);
+        <?php endif; ?>
+    });
 </script>
 
 

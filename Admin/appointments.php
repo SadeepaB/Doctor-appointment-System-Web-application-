@@ -23,8 +23,9 @@ $isLoggedIn = isset($_SESSION['admin_id']);
         .btn-primary {background-color: #007bff; color: white;}
         .btn-secondary {background-color: #6c757d; color: white;}
     </style>
-</head>
-<body>
+<body class="d-flex flex-column min-vh-100">
+<main class="flex-fill">
+
     <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
         <div class="container">
             <a class="navbar-brand" href="index.php">
@@ -47,6 +48,9 @@ $isLoggedIn = isset($_SESSION['admin_id']);
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="users.php">Users</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="feedback.php">Feedback</a>
                   </li>
                     <li class="nav-item d-flex align-items-center">
                         <a href="admin_profile.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
@@ -94,25 +98,25 @@ $isLoggedIn = isset($_SESSION['admin_id']);
             }
 
             $sqlUpcoming = "SELECT 
-                                a.appointment_id,
-                                a.date AS booking_date,
-                                a.time,
-                                d.name AS doctor_name,
-                                d.specialization,
-                                d.hospital,
-                                u.first_name,
-                                u.last_name,
-                                a.created_at
-                            FROM 
-                                appointment a
-                            JOIN 
-                                doctor d ON a.doctor_id = d.id
-                            JOIN 
-                                users u ON a.user_id = u.id
-                            WHERE 
-                                (a.date > CURDATE() OR (a.date = CURDATE() AND a.time >= CURTIME()))
-                            ORDER BY 
-                                a.date ASC, a.time ASC";
+                    a.appointment_id,
+                    a.date AS booking_date,
+                    a.time,
+                    d.name AS doctor_name,
+                    d.specialization,
+                    d.hospital,
+                    u.first_name,
+                    u.last_name,
+                    a.created_at
+                FROM 
+                    appointment a
+                JOIN 
+                    doctor d ON a.doctor_id = d.id
+                JOIN 
+                    users u ON a.user_id = u.id
+                WHERE 
+                    (a.date > CURDATE() OR (a.date = CURDATE() AND a.time >= CURTIME()))
+                ORDER BY 
+                    a.date ASC, a.time ASC";
             $resultUpcoming = $con->query($sqlUpcoming);
             if ($resultUpcoming->num_rows > 0) {
                 while($row = $resultUpcoming->fetch_assoc()) {
@@ -120,6 +124,8 @@ $isLoggedIn = isset($_SESSION['admin_id']);
                     $doctorName = $row['doctor_name'];
                     $specialization = $row['specialization'];
                     $hospital = $row['hospital'];
+                    $firstName = $row['first_name'];
+                    $lastName = $row['last_name'];
                     $scheduleDate = $row['booking_date'];
                     $time = $row['time'];
                     $createdAt = $row['created_at'];
@@ -133,11 +139,14 @@ $isLoggedIn = isset($_SESSION['admin_id']);
                             Booking Date: $createdDate<br>
                             </div>
                             <div class='card-body'>
-                                <h5 class='card-title'>Dr. $doctorName</h5>
+                                <h5 class='card-text' style='margin-bottom: 10px;'><i class='fas fa-user'></i> $firstName $lastName</h5>
+                                <h5 class='card-title'><i class='fas fa-user-md'></i> Dr. $doctorName</h5>
                                 <p class='card-text' style='margin-bottom: 5px;'>$specialization</p>
                                 <p class='card-text' style='margin-bottom: 10px;'>$hospital</p>
-                                <h6 class='card-text' style='margin-bottom: 5px;'>Schedule Date: $scheduleDate</h6>
-                                <h6 class='card-text'>Schedule Time: $time</h6>
+                                <h6 class='card-text d-flex justify-content-between' style='margin-bottom: 5px;'>
+                                    <span><i class='fas fa-calendar-day'></i> $scheduleDate</span>
+                                    <span><i class='fas fa-clock'></i> $time</span>
+                                </h6>
                             </div>
                             <div class='card-footer text-body-secondary'>
                                 <button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#confirmCancelModal' data-appointment-id='$appointmentId'>Cancel Booking</button>
@@ -161,21 +170,26 @@ $isLoggedIn = isset($_SESSION['admin_id']);
             include '../connection.php';
 
             $sqlPast = "SELECT 
-                            a.appointment_id,
-                            a.date AS booking_date,
-                            a.time,
-                            d.name AS doctor_name,
-                            d.specialization,
-                            d.hospital,
-                            a.created_at
-                        FROM 
-                            appointment a
-                        JOIN 
-                            doctor d ON a.doctor_id = d.id
-                        WHERE 
-                            (a.date < CURDATE() OR (a.date = CURDATE() AND a.time < CURTIME()))
-                        ORDER BY 
-                            a.date DESC, a.time DESC";
+                a.appointment_id,
+                a.date AS booking_date,
+                a.time,
+                d.name AS doctor_name,
+                d.specialization,
+                d.hospital,
+                u.first_name,
+                u.last_name,
+                a.created_at
+            FROM 
+                appointment a
+            JOIN 
+                doctor d ON a.doctor_id = d.id
+            JOIN 
+                users u ON a.user_id = u.id
+            WHERE 
+                (a.date < CURDATE() OR (a.date = CURDATE() AND a.time < CURTIME()))
+            ORDER BY 
+                a.date DESC, a.time DESC";
+
             $resultPast = $con->query($sqlPast);
             if ($resultPast->num_rows > 0) {
                 while($row = $resultPast->fetch_assoc()) {
@@ -184,6 +198,8 @@ $isLoggedIn = isset($_SESSION['admin_id']);
                     $doctorName = $row['doctor_name'];
                     $specialization = $row['specialization'];
                     $hospital = $row['hospital'];
+                    $firstName = $row['first_name'];
+                    $lastName = $row['last_name'];
                     $scheduleDate = $row['booking_date'];
                     $time = $row['time'];
                     $dateTime = new DateTime($createdAt);
@@ -196,14 +212,14 @@ $isLoggedIn = isset($_SESSION['admin_id']);
                             Booking Date: $createdDate<br>
                             </div>
                             <div class='card-body'>
-                                <h5 class='card-title'>Dr. $doctorName</h5>
+                                <h5 class='card-text' style='margin-bottom: 10px;'><i class='fas fa-user'></i> $firstName $lastName</h5>
+                                <h5 class='card-title'><i class='fas fa-user-md'></i> Dr. $doctorName</h5>
                                 <p class='card-text' style='margin-bottom: 5px;'>$specialization</p>
                                 <p class='card-text' style='margin-bottom: 10px;'>$hospital</p>
-                                <h6 class='card-text' style='margin-bottom: 5px;'>Schedule Date: $scheduleDate</h6>
-                                <h6 class='card-text'>Schedule Time: $time</h6>
-                            </div>
-                            <div class='card-footer text-body-secondary'>
-                                <p class='card-text'>This appointment has passed.</p>
+                                <h6 class='card-text d-flex justify-content-between' style='margin-bottom: 5px;'>
+                                    <span><i class='fas fa-calendar-day'></i> $scheduleDate</span>
+                                    <span><i class='fas fa-clock'></i> $time</span>
+                                </h6>
                             </div>
                         </div>
                     </div>";
@@ -235,7 +251,7 @@ $isLoggedIn = isset($_SESSION['admin_id']);
       </div>
     </div>
   </div>
-
+</main>
     <!-- Include the footer -->
     <?php include('footer.php'); ?>
 

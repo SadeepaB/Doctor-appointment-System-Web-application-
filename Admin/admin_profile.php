@@ -55,6 +55,9 @@ $admin = mysqli_fetch_assoc($result);
                   <li class="nav-item">
                     <a class="nav-link" href="users.php">Users</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="feedback.php">Feedback</a>
+                  </li>
                     <li class="nav-item d-flex align-items-center">
                         <a href="admin_profile.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
@@ -113,7 +116,7 @@ $admin = mysqli_fetch_assoc($result);
                         <hr>
                         <div class="row">
                             <div class="col-sm-12">
-                                <a class="btn btn-info" href="admin_profile_edit.php">Edit Details</a>
+                                <a class="btn btn-outline-dark" href="admin_profile_edit.php">Edit Details</a>
                             </div>
                         </div>
                     </div>

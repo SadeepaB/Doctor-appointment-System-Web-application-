@@ -32,17 +32,34 @@ if ($doctor_id > 0) {
 
 // Handle AJAX form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $stmt = $con->prepare("INSERT INTO appointment (user_id, doctor_id, date, time) VALUES (?, ?, ?, ?)");
-  $stmt->bind_param("iiss", $user_id, $doctor_id, $_POST['date'], $_POST['time']);
-  $success = $stmt->execute();
-  $response = [
-      'success' => $success,
-      'message' => $success ? 'Appointment booked successfully!' : 'Failed to book appointment: ' . $stmt->error
-  ];
-  $stmt->close();
-  mysqli_close($con);
-  echo json_encode($response);
-  exit();
+    // Check if the appointment already exists for any user
+    $stmt = $con->prepare("SELECT COUNT(*) FROM appointment WHERE doctor_id = ? AND date = ? AND time = ?");
+    $stmt->bind_param("iss", $doctor_id, $_POST['date'], $_POST['time']);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+
+    if ($count > 0) {
+        $response = [
+            'success' => false,
+            'message' => 'An appointment already exists for this date and time with this doctor.'
+        ];
+    } else {
+        // Proceed with insertion
+        $stmt = $con->prepare("INSERT INTO appointment (user_id, doctor_id, date, time) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("iiss", $user_id, $doctor_id, $_POST['date'], $_POST['time']);
+        $success = $stmt->execute();
+        $response = [
+            'success' => $success,
+            'message' => $success ? 'Appointment booked successfully!' : 'Failed to book appointment: ' . $stmt->error
+        ];
+        $stmt->close();
+    }
+
+    mysqli_close($con);
+    echo json_encode($response);
+    exit();
 }
 ?>
 

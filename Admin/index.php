@@ -41,6 +41,9 @@ if (!isset($_SESSION['admin_id'])){
                   <li class="nav-item">
                     <a class="nav-link" href="users.php">Users</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="feedback.php">Feedback</a>
+                  </li>
                     <li class="nav-item d-flex align-items-center">
                         <a href="admin_profile.php"><img src="../images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
