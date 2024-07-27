@@ -141,7 +141,7 @@ $con->close();
                         <a class="nav-link active" href="doctordashboard.php">Settings</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a href="doctordashboard.php"><img src="<?php echo $doctor['doctor_image']; ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;background-color: #000;"></a>
+                        <a href="doctordashboard.php"><img src="<?php echo $doctor['doctor_image']; ?>" class="rounded-circle img-hover bg-light" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                     </li>
                 </ul>

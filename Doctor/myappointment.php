@@ -158,7 +158,7 @@ $con->close();
                         <a class="nav-link" href="doctordashboard.php">Settings</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a href="doctordashboard.php"><img src="<?php echo $doctor_image; ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;background-color: #000;"></a>
+                        <a href="doctordashboard.php"><img src="<?php echo $doctor_image; ?>" class="rounded-circle img-hover bg-light" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                     </li>
                 </ul>
@@ -202,8 +202,10 @@ $con->close();
                                 <div class='card-body'>
                                     <h5 class='card-title'>Patient: $patientName</h5>
                                     <p class='card-text' style='margin-bottom: 10px;'>Age: $patientAge</p>
-                                    <h6 class='card-text' style='margin-bottom: 5px;'>Schedule Date: $scheduleDate</h6>
-                                    <h6 class='card-text'>Schedule Time: $time</h6>
+                                <h6 class='card-text d-flex justify-content-between' style='margin-bottom: 5px;'>
+                                    <span><i class='fas fa-calendar-day'></i> $scheduleDate</span>
+                                    <span><i class='fas fa-clock'></i> $time</span>
+                                </h6>
                                 </div>
                                 <div class='card-footer text-body-secondary'>
                                     <button class='btn btn-danger cancel-button' data-bs-toggle='modal' data-bs-target='#confirmCancelModal' data-appointment-id='$appointmentId'>Cancel Appointment</button>
@@ -238,8 +240,12 @@ $con->close();
                                     Booking Date: $createdDate<br>
                                 </div>
                                 <div class='card-body'>
-                                    <h6 class='card-text' style='margin-bottom: 5px;'>Schedule Date: $scheduleDate</h6>
-                                    <h6 class='card-text'>Schedule Time: $time</h6>
+                                    <h5 class='card-title'>Patient: $patientName</h5>
+                                    <p class='card-text' style='margin-bottom: 10px;'>Age: $patientAge</p>
+                                <h6 class='card-text d-flex justify-content-between' style='margin-bottom: 5px;'>
+                                    <span><i class='fas fa-calendar-day'></i> $scheduleDate</span>
+                                    <span><i class='fas fa-clock'></i> $time</span>
+                                </h6>
                                 </div>
                             </div>
                         </div>";

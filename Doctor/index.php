@@ -119,7 +119,7 @@ $con->close();
                         <a class="nav-link" href="doctordashboard.php">Settings</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a href="doctordashboard.php"><img src="<?php echo $doctor_image; ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;background-color: #000;"></a>
+                        <a href="doctordashboard.php"><img src="<?php echo $doctor_image; ?>" class="rounded-circle img-hover bg-light" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                     </li>
                 </ul>
@@ -132,7 +132,7 @@ $con->close();
             <div class="d-flex flex-column align-items-start">
                 <span class="fs-4 mb-3"><strong>Doctor Profile</strong></span>
                 <section class="doctor-profile text-center p-4 text-white rounded w-100" style="background-color:#6295a2;">
-                    <img src="<?php echo htmlspecialchars($doctor_image); ?>" alt="Doctor Profile Picture" class="rounded-circle mb-3" style="width: 150px; max-height: 150px;  ">
+                    <img src="<?php echo htmlspecialchars($doctor_image); ?>" alt="Doctor Profile Picture" class="rounded-circle mb-3 bg-light" style="width: 150px; height: 150px;  ">
                     <h2><?php echo htmlspecialchars($doctor['name']); ?></h2>
                     <p><?php echo htmlspecialchars($doctor['specialization']); ?></p>
                     <p><?php echo htmlspecialchars($doctor['hospital']); ?></p>
@@ -152,23 +152,29 @@ $con->close();
                     </div>
                     <div class="col-sm-6 mb-3">
                         <div class="status-item text-center p-4 text-white rounded card" style="background-color:#6295a2;">
+                            <a href="patients.php" class="text-decoration-none text-reset">
                             <p><strong>All Patients</strong></p>
                             <p><strong><?php echo $total_patients; ?></strong></p>
                             <i class="fa fa-wheelchair fa-3x" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
                     <div class="col-sm-6 mb-3">
                         <div class="status-item text-center p-4 text-white rounded card" style="background-color:#6295a2;">
+                        <a href="myappointment.php" class="text-decoration-none text-reset">
                             <p><strong>New Appointments</strong></p>
                             <p><strong><?php echo $new_appointments; ?></strong></p>
                             <i class="fas fa-calendar-plus fa-3x" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
                     <div class="col-sm-6 mb-3">
                         <div class="status-item text-center p-4 text-white rounded card" style="background-color:#6295a2;">
+                        <a href="myappointment.php" class="text-decoration-none text-reset">
                             <p><strong>All Appointments</strong></p>
                             <p><strong><?php echo $all_appointments; ?></strong></p>
                             <i class="fas fa-calendar-check fa-3x" aria-hidden="true"></i>
+                        </a>
                         </div>
                     </div>
                 </div>

@@ -112,7 +112,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'fetch_appointments' && isse
                   </li>
                   <li class="nav-item d-flex align-items-center">
                     <a href="doctordashboard.php">
-                        <img src="<?php echo htmlspecialchars($doctor['doctor_image']); ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff; background-color: #000;">
+                        <img src="<?php echo htmlspecialchars($doctor['doctor_image']); ?>" class="rounded-circle img-hover bg-light" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;">
                     </a>
                       <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                   </li>
@@ -169,7 +169,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'fetch_appointments' && isse
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div id="appointmentDetails">
+                    <div id="appointmentDetails" class="">
                         <!-- Appointment details will be loaded here -->
                     </div>
                 </div>
