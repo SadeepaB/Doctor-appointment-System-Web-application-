@@ -46,8 +46,12 @@ $stmt->execute();
 $all_appointments_result = $stmt->get_result();
 $all_appointments = $all_appointments_result->fetch_assoc()['all_appointments'];
 
-// Fetch appointments
-$appointments_query = "SELECT a.*, u.first_name, u.last_name FROM appointment a JOIN users u ON a.user_id = u.id WHERE a.doctor_id = ? ORDER BY a.date, a.time";
+// Fetch upcoming appointments
+$appointments_query = "SELECT a.*, u.first_name, u.last_name 
+                       FROM appointment a 
+                       JOIN users u ON a.user_id = u.id 
+                       WHERE a.doctor_id = ? AND a.date > CURDATE() OR (a.date = CURDATE() AND a.time > CURRENT_TIME)
+                       ORDER BY a.date, a.time";
 $stmt = $con->prepare($appointments_query);
 $stmt->bind_param("i", $doctor_id);
 $stmt->execute();
@@ -91,7 +95,7 @@ $con->close();
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
+    <nav class="navbar navbar-expand-lg sticky-top py-1" style="background-color: #6295a2;">
         <div class="container">
             <a class="navbar-brand" href="index.php">
                 <img src="../images/logo.png" alt="Logo" width="50" height="40">
@@ -115,7 +119,7 @@ $con->close();
                         <a class="nav-link" href="doctordashboard.php">Settings</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                    <a href="doctordashboard.php"><img src="<?php echo $doctor['doctor_image']; ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;background-color: #000;"></a>
+                        <a href="doctordashboard.php"><img src="<?php echo $doctor_image; ?>" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40" style="border: 2px solid #fff;background-color: #000;"></a>
                         <a class="nav-link" href="../logout.php"><button class="btn btn-light">Logout</button></a>
                     </li>
                 </ul>
@@ -126,9 +130,9 @@ $con->close();
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex flex-column align-items-start">
-                <span class="fs-4 mb-4"><strong>Doctor Profile</strong></span>
+                <span class="fs-4 mb-3"><strong>Doctor Profile</strong></span>
                 <section class="doctor-profile text-center p-4 text-white rounded w-100" style="background-color:#6295a2;">
-                    <img src="<?php echo htmlspecialchars($doctor_image); ?>" alt="Doctor Profile Picture" class="rounded-circle mb-3" style="width: 150px;">
+                    <img src="<?php echo htmlspecialchars($doctor_image); ?>" alt="Doctor Profile Picture" class="rounded-circle mb-3" style="width: 150px; max-height: 150px;  ">
                     <h2><?php echo htmlspecialchars($doctor['name']); ?></h2>
                     <p><?php echo htmlspecialchars($doctor['specialization']); ?></p>
                     <p><?php echo htmlspecialchars($doctor['hospital']); ?></p>
@@ -175,7 +179,7 @@ $con->close();
 
 <div class="container mt-4">
     <div class="text-center">
-        <span class="fs-4 mb-3"><strong>My Appointments</strong></span>
+        <span class="fs-3 mb-2"><strong>My Appointments</strong></span>
     </div>
     <div class="bd-example">
         <table class="table table-striped table-hover">
