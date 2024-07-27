@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $max_file_size = 5 * 1024 * 1024;
 
         if (in_array($file_ext, $allowed_file_types) && $file_size <= $max_file_size) {
-            $upload_dir = '../images/';
+            $upload_dir = '../images/doctor/';
             $profile_pic = $upload_dir . $doctor_id . '.' . $file_ext;
             if (move_uploaded_file($file_tmp_path, $profile_pic)) {
                 // Update the database with the new profile picture path
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($stmt->execute()) {
-        $_SESSION['message'] = "";
+       
         header("Location: doctordashboard.php"); // Redirect to the dashboard
         exit();
     } else {

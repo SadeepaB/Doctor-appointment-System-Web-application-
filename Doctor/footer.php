@@ -23,10 +23,10 @@
 
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0">
           <h6 class="text-uppercase fw-bold mb-3">About</h6>
-          <p class="mb-1"><a href="about.php" class="text-reset text-decoration-none">About Us</a></p>
-          <p class="mb-1"><a href="contact us.php" class="text-reset text-decoration-none">Contact Us</a></p>
-          <p class="mb-1"><a href="doctors.php" class="text-reset text-decoration-none">Our Doctors</a></p>
-          <p class="mb-1"><a href="about.php" class="text-reset text-decoration-none">The Company</a></p>
+          <p class="mb-1"><a href="#" class="text-reset text-decoration-none">About Us</a></p>
+          <p class="mb-1"><a href="#" class="text-reset text-decoration-none">Contact Us</a></p>
+          <p class="mb-1"><a href="#" class="text-reset text-decoration-none">Our Doctors</a></p>
+          <p class="mb-1"><a href="#" class="text-reset text-decoration-none">The Company</a></p>
         </div>
       </div>
     </div>
