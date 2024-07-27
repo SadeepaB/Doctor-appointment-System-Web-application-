@@ -84,7 +84,7 @@ $con->close();
                 <div class="card mt-lg-5">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                        <img src="<?php echo $doctor['doctor_image']; ?>" alt="DOCTOR" class="rounded-circle" width="150" style="background-color: #29a5c0;">
+                        <img src="<?php echo $doctor['doctor_image']; ?>" alt="DOCTOR" class="rounded-circle" width="150" height="150" style="background-color: #29a5c0;">
                             <div class="mt-3">
                                 <h4><?php echo $doctor['name']; ?></h4>
                                 <p class="text-muted font-size-sm"><?php echo $doctor['specialization']; ?></p>

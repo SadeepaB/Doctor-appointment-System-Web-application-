@@ -130,9 +130,9 @@ $con->close();
     <div class="row">
         <div class="col-md-6">
             <div class="d-flex flex-column align-items-start">
-                <span class="fs-4 mb-4"><strong>Doctor Profile</strong></span>
+                <span class="fs-4 mb-3"><strong>Doctor Profile</strong></span>
                 <section class="doctor-profile text-center p-4 text-white rounded w-100" style="background-color:#6295a2;">
-                    <img src="<?php echo htmlspecialchars($doctor_image); ?>" alt="Doctor Profile Picture" class="rounded-circle mb-3" style="width: 150px;">
+                    <img src="<?php echo htmlspecialchars($doctor_image); ?>" alt="Doctor Profile Picture" class="rounded-circle mb-3" style="width: 150px; max-height: 150px;  ">
                     <h2><?php echo htmlspecialchars($doctor['name']); ?></h2>
                     <p><?php echo htmlspecialchars($doctor['specialization']); ?></p>
                     <p><?php echo htmlspecialchars($doctor['hospital']); ?></p>
@@ -179,7 +179,7 @@ $con->close();
 
 <div class="container mt-4">
     <div class="text-center">
-        <span class="fs-4 mb-3"><strong>My Appointments</strong></span>
+        <span class="fs-3 mb-2"><strong>My Appointments</strong></span>
     </div>
     <div class="bd-example">
         <table class="table table-striped table-hover">

@@ -156,7 +156,7 @@ $con->close();
                     <div class="card mt-lg-5">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="<?php echo $doctor['doctor_image']; ?>" alt="Admin" class="rounded-circle" width="150">
+                                <img src="<?php echo $doctor['doctor_image']; ?>" alt="Admin" class="rounded-circle" width="150"hight="150">
                                 <div class="mt-3">
                                     <h4><?php echo htmlspecialchars($name); ?></h4>
                                     <p class="text-muted font-size-sm"><?php echo htmlspecialchars($email); ?></p>
