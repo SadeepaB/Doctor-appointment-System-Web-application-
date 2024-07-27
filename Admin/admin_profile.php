@@ -116,7 +116,7 @@ $admin = mysqli_fetch_assoc($result);
                         <hr>
                         <div class="row">
                             <div class="col-sm-12">
-                                <a class="btn btn-outline-dark" href="admin_profile_edit.php">Edit Details</a>
+                                <a class="btn btn-primary" href="admin_profile_edit.php">Edit Details</a>
                             </div>
                         </div>
                     </div>

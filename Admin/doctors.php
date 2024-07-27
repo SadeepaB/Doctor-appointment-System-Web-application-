@@ -20,18 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-            // Handle file upload
-        $imagePath = '';
-        if (isset($_FILES['doctorImage']) && $_FILES['doctorImage']['error'] == UPLOAD_ERR_OK) {
-            $imageTmpName = $_FILES['doctorImage']['tmp_name'];
-            $imageName = basename($_FILES['doctorImage']['name']);
-            $imagePath = 'images/' . $imageName;
-            move_uploaded_file($imageTmpName, $imagePath);
-        }
-
-        $stmt = $con->prepare("INSERT INTO doctor (name, specialization, hospital, email, password, doctor_image) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = $con->prepare("INSERT INTO doctor (name, specialization, hospital, email, password) VALUES (?, ?, ?, ?, ?)");
         if ($stmt) {
-            $stmt->bind_param("ssssss", $doctorName, $specialization, $hospital, $email, $password, $imagePath);
+            $stmt->bind_param("sssss", $doctorName, $specialization, $hospital, $email, $password);
 
             if ($stmt->execute()) {
                 $message = "Doctor added successfully.";
@@ -224,10 +215,6 @@ $con->close();
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="doctorImage" class="form-label">Doctor Image</label>
-                            <input type="file" class="form-control" id="doctorImage" name="doctorImage" accept="image/*">
-                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" name="addDoctor">Save Doctor</button>
@@ -278,7 +265,7 @@ $con->close();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="editDoctorForm" method="POST" action="" enctype="multipart/form-data">
+                    <form id="editDoctorForm" method="POST" action="">
                         <input type="hidden" id="editDoctorId" name="id">
                         <div class="mb-3">
                             <label for="editDoctorName" class="form-label">Doctor Name</label>
@@ -299,10 +286,6 @@ $con->close();
                         <div class="mb-3">
                             <label for="editPassword" class="form-label">Password (Leave blank to keep current password)</label>
                             <input type="password" class="form-control" id="editPassword" name="password" placeholder="Enter new password">
-                        </div>
-                        <div class="mb-3">
-                            <label for="editDoctorImage" class="form-label">Doctor Image (Leave blank to keep current image)</label>
-                            <input type="file" class="form-control" id="editDoctorImage" name="doctorImage" accept="image/*">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -417,6 +400,7 @@ $con->close();
                         $('#editHospital').val(response.hospital);
                         $('#editEmail').val(response.email);
                         $('#editPassword').val('');
+                        $('#editDoctorImage').val(''); 
                     }
                 });
             });

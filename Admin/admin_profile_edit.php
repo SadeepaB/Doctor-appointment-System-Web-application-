@@ -154,6 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <!-- Include the footer -->
+</main>
 <?php include('footer.php'); ?>
 
 <script src="../js/bootstrap.bundle.min.js"></script>
