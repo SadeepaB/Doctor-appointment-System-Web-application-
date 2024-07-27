@@ -139,22 +139,44 @@ $con->close();
   </div>
   
   <!-- Display Feedback and Replies -->
-  <div class="container mt-5 mb-5">
-    <h3 class="text-primary">Your Feedback and Replies</h3>
-    <?php while ($feedback = $feedback_result->fetch_assoc()): ?>
-        <div class="card mb-4">
-            <div class="card-body">
-                <h5 class="card-title">Message sent on: <?= htmlspecialchars($feedback['created_at']) ?></h5>
-                <p class="card-text"><?= htmlspecialchars($feedback['message']) ?></p>
-                <?php if ($feedback['reply']): ?>
-                    <p class="card-text"><strong>Reply:</strong> <?= htmlspecialchars($feedback['reply']) ?></p>
-                <?php else: ?>
-                    <p class="card-text text-muted">No reply yet</p>
-                <?php endif; ?>
+<!-- Display Feedback and Replies -->
+<div class="container mt-5 mb-5">
+    <h3 class="text-primary mb-4">Your Feedback and Replies</h3>
+    <div class="row gx-4 gy-4">
+        <?php while ($feedback = $feedback_result->fetch_assoc()): ?>
+            <?php
+                // Assuming created_at is in 'Y-m-d H:i:s' format
+                $createdAt = new DateTime($feedback['created_at']);
+                $date = $createdAt->format('F j, Y'); // Example: July 27, 2024
+                $time = $createdAt->format('g:i A'); // Example: 2:30 PM
+            ?>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card border-light shadow-sm rounded-3">
+                    <div class="card-body">
+                        <h6 class="card-title mb-3">
+                            <i class="fas fa-calendar-day"></i> <span class="ms-2"><?= $date ?></span>
+                            <span class="ms-4">
+                                <i class="fas fa-clock"></i> <span class="ms-2"><?= $time ?></span>
+                            </span>
+                        </h6>
+                        <p class="card-text mb-3"><?= htmlspecialchars($feedback['message']) ?></p>
+                        <?php if ($feedback['reply']): ?>
+                            <p class="card-text">
+                                <strong><i class="fas fa-reply"></i> Reply:</strong> <?= htmlspecialchars($feedback['reply']) ?>
+                            </p>
+                        <?php else: ?>
+                            <p class="card-text text-muted">
+                                <i class="fas fa-clock"></i> No reply yet
+                            </p>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
-        </div>
-    <?php endwhile; ?>
-  </div>
+        <?php endwhile; ?>
+    </div>
+</div>
+
+
  
   <!-- Include the footer -->
   <?php include('footer.php'); ?>

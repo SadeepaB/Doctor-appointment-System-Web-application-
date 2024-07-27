@@ -80,36 +80,42 @@ $feedback_result = $con->query($feedback_query);
 <!-- Feedback Section -->
 <div class="container mt-5">
     <h2 class="fw-bolder mb-4 text-center" style="color: #6295a2;">User Feedback</h2>
-    <?php while ($feedback = $feedback_result->fetch_assoc()): ?>
-        <div class="card mb-5 bg-light shadow border-0" style="height: 200px;">
-    <div class="row g-0 h-100">
-        <div class="col-md-8 d-flex align-items-center">
-            <div class="card-body">
-                <h5 class="card-title">Name: <?= htmlspecialchars($feedback['first_name'] . ' ' . $feedback['last_name']) ?></h5>
-                <h6 class="card-subtitle mb-2 text-muted">Email: <?= htmlspecialchars($feedback['user_email']) ?></h6>
-                <p class="card-text"><?= htmlspecialchars($feedback['message']) ?></p>
-                <?php if ($feedback['reply']): ?>
-                    <p class="card-text"><strong>Reply:</strong> <?= htmlspecialchars($feedback['reply']) ?></p>
-                <?php else: ?>
-                    <form method="post" action="">
-                        <input type="hidden" name="feedback_id" value="<?= $feedback['id'] ?>">
-                        <div class="mb-3">
-                            <label for="reply" class="form-label">Reply</label>
-                            <textarea class="form-control" id="reply" name="reply" rows="3"></textarea>
+    <div class="row gx-5 gy-5">
+        <?php while ($feedback = $feedback_result->fetch_assoc()): ?>
+            <div class="col-12 col-lg-6">
+                <div class="card bg-light shadow border-0 h-100">
+                    <div class="row g-0 h-100">
+                        <div class="col-md-6 d-flex align-items-center">
+                            <div class="card-body p-3">
+                                <h5 class="card-title mb-2">Name: <?= htmlspecialchars($feedback['first_name'] . ' ' . $feedback['last_name']) ?></h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Email: <?= htmlspecialchars($feedback['user_email']) ?></h6>
+                                <p class="card-text mb-2"><?= htmlspecialchars($feedback['message']) ?></p>
+                                <?php if ($feedback['reply']): ?>
+                                    <p class="card-text"><strong>Reply:</strong> <?= htmlspecialchars($feedback['reply']) ?></p>
+                                <?php else: ?>
+                                    <form method="post" action="">
+                                        <input type="hidden" name="feedback_id" value="<?= $feedback['id'] ?>">
+                                        <div class="mb-2">
+                                            <label for="reply" class="form-label">Reply</label>
+                                            <textarea class="form-control" id="reply" name="reply" rows="2"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-sm">Send Reply</button>
+                                    </form>
+                                <?php endif; ?>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Send Reply</button>
-                    </form>
-                <?php endif; ?>
+                        <div class="col-md-6 d-flex align-items-center justify-content-center d-none d-md-flex">
+                            <img src="../images/feedbackimg.jpg" class="img-fluid" style="object-fit: cover;" alt="Image description">
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <img src="../images/feedbackimg.jpg" class="img-fluid h-100" style="object-fit: cover;" alt="Image description">
-        </div>
+        <?php endwhile; ?>
     </div>
 </div>
 
-    <?php endwhile; ?>
-</div>
+
+
 
 </main>
 <!-- Include the footer -->
