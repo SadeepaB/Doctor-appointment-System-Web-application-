@@ -42,7 +42,7 @@ $feedback_result = $con->query($feedback_query);
 <main class="flex-fill">
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
+<nav class="navbar navbar-expand-lg sticky-top py-1" style="background-color: #6295a2;">
     <div class="container">
         <a class="navbar-brand" href="index.php">
             <img src="../images/logo.png" alt="Logo" width="50" height="40">
@@ -79,12 +79,14 @@ $feedback_result = $con->query($feedback_query);
 
 <!-- Feedback Section -->
 <div class="container mt-5">
-    <h2 class="text-primary mb-4">User Feedback</h2>
+    <h2 class="fw-bolder mb-4 text-center" style="color: #6295a2;">User Feedback</h2>
     <?php while ($feedback = $feedback_result->fetch_assoc()): ?>
-        <div class="card mb-4">
+        <div class="card mb-5 bg-light shadow border-0" style="height: 200px;">
+    <div class="row g-0 h-100">
+        <div class="col-md-8 d-flex align-items-center">
             <div class="card-body">
-                <h5 class="card-title"><?= htmlspecialchars($feedback['first_name'] . ' ' . $feedback['last_name']) ?></h5>
-                <h6 class="card-subtitle mb-2 text-muted"><?= htmlspecialchars($feedback['user_email']) ?></h6>
+                <h5 class="card-title">Name: <?= htmlspecialchars($feedback['first_name'] . ' ' . $feedback['last_name']) ?></h5>
+                <h6 class="card-subtitle mb-2 text-muted">Email: <?= htmlspecialchars($feedback['user_email']) ?></h6>
                 <p class="card-text"><?= htmlspecialchars($feedback['message']) ?></p>
                 <?php if ($feedback['reply']): ?>
                     <p class="card-text"><strong>Reply:</strong> <?= htmlspecialchars($feedback['reply']) ?></p>
@@ -100,6 +102,12 @@ $feedback_result = $con->query($feedback_query);
                 <?php endif; ?>
             </div>
         </div>
+        <div class="col-md-4">
+            <img src="../images/feedbackimg.jpg" class="img-fluid h-100" style="object-fit: cover;" alt="Image description">
+        </div>
+    </div>
+</div>
+
     <?php endwhile; ?>
 </div>
 

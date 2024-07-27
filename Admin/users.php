@@ -68,7 +68,7 @@ $user_count = $count_row['count'];
 </head>
 <body class="d-flex flex-column min-vh-100">
     <main class="flex-fill">
-        <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
+        <nav class="navbar navbar-expand-lg sticky-top py-1" style="background-color: #6295a2;">
             <div class="container">
                 <a class="navbar-brand" href="index.php">
                     <img src="../images/logo.png" alt="Logo" width="50" height="40">
