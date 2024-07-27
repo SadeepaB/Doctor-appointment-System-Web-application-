@@ -10,7 +10,7 @@
 </head>
 <body>
   
-  <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
+  <nav class="navbar navbar-expand-lg sticky-top py-1" style="background-color: #6295a2;">
     <div class="container">
         <a class="navbar-brand" href="index.php">
             <img src="images/logo.png" alt="Logo" width="50" height="40">

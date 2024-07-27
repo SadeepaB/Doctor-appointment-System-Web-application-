@@ -15,7 +15,7 @@
 <body class="d-flex flex-column min-vh-100">
 <main class="flex-fill">
 
-  <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
+  <nav class="navbar navbar-expand-lg sticky-top py-1" style="background-color: #6295a2;">
     <div class="container">
         <a class="navbar-brand" href="index.php">
             <img src="images/logo.png" alt="Logo" width="50" height="40">
@@ -154,11 +154,13 @@
                               Booking Date: $createdDate<br>
                             </div>
                             <div class='card-body'>
-                                <h5 class='card-title'>Dr. $doctorName</h5>
+                                <h5 class='card-title'><i class='fas fa-user-md text-secondary'></i> Dr. $doctorName</h5>
                                 <p class='card-text' style='margin-bottom: 5px;'>$specialization</p>
                                 <p class='card-text' style='margin-bottom: 10px;'>$hospital</p>
-                                <h6 class='card-text' style='margin-bottom: 5px;'>Schedule Date: $scheduleDate</h6>
-                                <h6 class='card-text'>Schedule Time: $time</h6>
+                                <h6 class='card-text d-flex justify-content-between' style='margin-bottom: 5px;'>
+                                    <span><i class='fas fa-calendar-day text-secondary'></i> $scheduleDate</span>
+                                    <span><i class='fas fa-clock text-secondary'></i> $time</span>
+                                </h6>
                             </div>
                             <div class='card-footer text-body-secondary'>
                                 <button class='btn btn-danger' data-bs-toggle='modal' data-bs-target='#confirmCancelModal' data-appointment-id='$appointmentId'>Cancel Booking</button>
@@ -237,11 +239,13 @@
                               Booking Date: $createdDate<br>
                             </div>
                             <div class='card-body'>
-                                <h5 class='card-title'>Dr. $doctorName</h5>
+                                <h5 class='card-title'><i class='fas fa-user-md text-secondary'></i> Dr. $doctorName</h5>
                                 <p class='card-text' style='margin-bottom: 5px;'>$specialization</p>
                                 <p class='card-text' style='margin-bottom: 10px;'>$hospital</p>
-                                <h6 class='card-text' style='margin-bottom: 5px;'>Schedule Date: $scheduleDate</h6>
-                                <h6 class='card-text'>Schedule Time: $time</h6>
+                                <h6 class='card-text d-flex justify-content-between' style='margin-bottom: 5px;'>
+                                    <span><i class='fas fa-calendar-day text-secondary'></i> $scheduleDate</span>
+                                    <span><i class='fas fa-clock text-secondary'></i> $time</span>
+                                </h6>
                             </div>
                         </div>
                     </div>";

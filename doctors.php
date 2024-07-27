@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
+  <nav class="navbar navbar-expand-lg sticky-top py-1" style="background-color: #6295a2;">
     <div class="container">
         <a class="navbar-brand" href="index.php">
             <img src="images/logo.png" alt="Logo" width="50" height="40">
@@ -79,9 +79,18 @@
       $sql = "SELECT name, specialization, hospital, doctor_image FROM doctor";
       $result = $conn->query($sql);
 
+      function convertPath($path) {
+        // Remove "../" from the beginning of the path
+        if (strpos($path, '../') === 0) {
+            $path = substr($path, 3); // Remove the "../" part
+        }
+        return $path;
+      }
+
       if ($result->num_rows > 0) {
           while($row = $result->fetch_assoc()) {
-              $doctorImage = !empty($row['doctor_image']) ? htmlspecialchars($row['doctor_image']) : 'images/user.png';
+              $doctorImage = !empty($row['doctor_image']) ? htmlspecialchars($row['doctor_image']) : 'images/profileicon.png';
+              $doctorImage = convertPath($doctorImage);
               echo '<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                       <div class="card h-auto flex-row p-1 bg-light px-4">
                         <img src="' . $doctorImage . '" class="card-img rounded-circle m-auto" style="width: 75px; height: 75px; object-fit: cover;">

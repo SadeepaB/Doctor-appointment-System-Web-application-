@@ -61,6 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo json_encode($response);
     exit();
 }
+function convertPath($path) {
+    // Remove "../" from the beginning of the path
+    if (strpos($path, '../') === 0) {
+        $path = substr($path, 3); // Remove the "../" part
+    }
+    return $path;
+  }
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
+<nav class="navbar navbar-expand-lg sticky-top py-1" style="background-color: #6295a2;">
     <div class="container">
         <a class="navbar-brand" href="index.php">
           <img src="images/logo.png" alt="Logo" width="50" height="40">
@@ -106,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $isLoggedIn = isset($_SESSION['user_id']); 
                 if ($isLoggedIn) {
                     echo '<li class="nav-item d-flex align-items-center">';
-                    echo '    <a href="userdashboard.php"><img src="images/User.png" class="rounded-circle" alt="Profile Image" width="40" height="40"></a>';
+                    echo '    <a href="userdashboard.php"><img src="images/profileicon.png" class="rounded-circle" alt="Profile Image" width="40" height="40"></a>';
                     echo '    <a class="nav-link" href="logout.php"><button class="btn btn-light">Logout</button></a>'; 
                     echo '</li>';
                 } else {
@@ -131,7 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="card bg-light text-center">
                 <h4 class="text-center mt-2">Doctor Details</h4>
                     <?php 
-                    $doctorImage = !empty($doctor['doctor_image']) ? htmlspecialchars($doctor['doctor_image']) : 'images/user.png';
+                    $doctorImage = !empty($doctor['doctor_image']) ? htmlspecialchars($doctor['doctor_image']) : 'images/profileicon.png';
+                    $doctorImage = convertPath($doctorImage);
                     ?>
                     <img src="<?php echo $doctorImage; ?>" class="card-img-top rounded-circle" alt="Doctor Image">
                     <div class="card-body">

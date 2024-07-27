@@ -29,8 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = "Please fill in at least one field to search.";
     }
 }
-?>
+function convertPath($path) {
+  // Remove "../" from the beginning of the path
+  if (strpos($path, '../') === 0) {
+      $path = substr($path, 3); // Remove the "../" part
+  }
+  return $path;
+}
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,9 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 
-<!--Navbar-->
-
-  <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #6295a2;">
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg sticky-top py-1" style="background-color: #6295a2;">
     <div class="container">
         <a class="navbar-brand" href="index.php">
           <img src="images/logo.png" alt="Logo" width="50" height="40">
@@ -92,8 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
   </nav>
 
-<!--Image slider--> 
-
+  <!--Image slider--> 
     <div id="carouselExampleIndicators" class="carousel slide carousel-fade container" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -121,9 +126,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </button>
     </div>
 
-
-<!--Doctor Search Form-->
-<div class="container mb-4 rounded-3 text-center p-4 bg-light">
+  <!--Doctor Search Form-->
+  <div class="container mb-4 rounded-3 text-center p-4 bg-light">
     <form class="row g-3" method="POST" action="">
         <div class="col-md-3">
             <label for="doctor-name" class="form-label">Doctor Name</label>
@@ -148,16 +152,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php if (!empty($message)): ?>
         <p class="text-danger"><?php echo htmlspecialchars($message); ?></p>
     <?php endif; ?>
-</div>
+  </div>
 
-<!--Doctor Searched Details--> 
-<div class="container mb-4 text-center" id="doctor-results">
+  <!--Doctor Searched Details--> 
+  <div class="container mb-4 text-center" id="doctor-results">
     <div class="row g-4">
     <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && $result) {
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
-                    $doctorImage = !empty($row['doctor_image']) ? htmlspecialchars($row['doctor_image']) : 'images/User.png';
+                    $doctorImage = !empty($row['doctor_image']) ? htmlspecialchars($row['doctor_image']) : 'images/profileicon.png';
+                    $doctorImage = convertPath($doctorImage);
                     echo '<div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">';
                     echo '    <div class="card h-100 bg-light">';
                     echo '        <img src="' . $doctorImage . '" class="card-img-top rounded-circle" alt="Doctor Image">';
@@ -177,9 +182,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mysqli_close($con);
         ?>
     </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -194,11 +200,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       </div>
     </div>
   </div>
-</div>
+  </div>
 
-
-<!--Wellness and Health Tips-->
-
+  <!--Wellness and Health Tips-->
   <div class="container mb-4">
     <h3 class="text-center mb-4">Wellness and Health Tips</h3>
     <div class="row g-4">
@@ -238,8 +242,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
         myModal.show();
     }
-}
-$(document).ready(function() {
+    }
+    $(document).ready(function() {
         <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $result && mysqli_num_rows($result) > 0): ?>
             $('html, body').animate({
                 scrollTop: $('#doctor-results').offset().top - 60
@@ -247,7 +251,6 @@ $(document).ready(function() {
         <?php endif; ?>
     });
 </script>
-
 
 </body>
 </html>
