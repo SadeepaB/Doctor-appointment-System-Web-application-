@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("connection.php"); // Ensure this file includes your database connection
+include("connection.php"); 
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $name = isset($_POST['name']) ? trim($_POST['name']) : '';

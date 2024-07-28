@@ -60,7 +60,7 @@ if (!isset($_SESSION['admin_id'])){
           <h2 class="fw-bolder" style="color: #6295a2;">Status</h2>
       </div>
       <?php
-      include '../connection.php'; // Ensure the connection file is included
+      include '../connection.php'; 
 
       // Fetch the count of all doctors
       $sqlDoctors = "SELECT COUNT(*) AS doctor_count FROM doctor";
@@ -133,14 +133,13 @@ if (!isset($_SESSION['admin_id'])){
 $con->close();
 ?>
 
-  
 <!-- Appointments and Doctors Section -->
 <div class="container">
 <div class="row mt-4">
     <div class="col-md-6">
         <h3 class="text-center">New Appointments</h3>
         <?php
-        include '../connection.php'; // Ensure the connection file is included
+        include '../connection.php'; 
 
         // Fetch top 3 upcoming appointments from today onwards
         $sqlUpcoming = "SELECT 
@@ -158,10 +157,9 @@ $con->close();
                             a.date > CURDATE() OR (a.date = CURDATE() AND a.time >= CURTIME())
                         ORDER BY 
                             a.date ASC, a.time ASC
-                        LIMIT 3"; // Limit to top 3 upcoming appointments
+                        LIMIT 3"; 
 
         $resultUpcoming = $con->query($sqlUpcoming);
-
         if ($resultUpcoming->num_rows > 0) {
             echo "
             <table class='table table-striped table-hover mt-3'>
@@ -193,7 +191,6 @@ $con->close();
 
         $con->close();
         ?>
-
         <div class="text-center mt-3">
             <button class="btn btn-primary" onclick="window.location.href='appointments.php'">Show all Appointments</button>
         </div>
@@ -201,7 +198,7 @@ $con->close();
     <div class="col-md-6">
         <h3 class="text-center">Top Doctors</h3>
         <?php
-        include '../connection.php'; // Ensure the connection file is included
+        include '../connection.php'; 
 
         // Fetch top 3 doctors based on the number of appointments
         $sqlTopDoctors = "SELECT 
@@ -219,7 +216,6 @@ $con->close();
                         LIMIT 3"; // Limit to top 3 doctors
 
         $resultTopDoctors = $con->query($sqlTopDoctors);
-
         if ($resultTopDoctors->num_rows > 0) {
             echo "
             <table class='table table-striped table-hover mt-3'>
@@ -258,7 +254,6 @@ $con->close();
     </div>
     </div>    
     </div>
-
     
     <!-- Include the footer -->
     <?php include('footer.php'); ?>

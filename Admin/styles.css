@@ -30,10 +30,10 @@
 /*Card*/
 
 .card-img-top {
-    width: 150px;  /* Set the width of the image */
-    height: 150px; /* Set the height of the image */
-    object-fit: cover; /* Ensure the image covers the area */
-    margin: 0 auto; /* Center the image horizontally */
+    width: 150px;  
+    height: 150px; 
+    object-fit: cover; 
+    margin: 0 auto; 
 }
 .card:hover {
     transform: scale(1.05);
