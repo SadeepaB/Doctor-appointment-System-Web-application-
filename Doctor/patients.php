@@ -16,7 +16,7 @@ $stmt->execute();
 $doctor_result = $stmt->get_result();
 $doctor = $doctor_result->fetch_assoc();
 
-// Fetch patients for the logged-in doctor
+// Fetch patients
 $patients_query = "SELECT 
                         u.id,
                         u.first_name, 
@@ -170,7 +170,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'fetch_appointments' && isse
                 </div>
                 <div class="modal-body">
                     <div id="appointmentDetails" class="">
-                        <!-- Appointment details will be loaded here -->
                     </div>
                 </div>
                 <div class="modal-footer">

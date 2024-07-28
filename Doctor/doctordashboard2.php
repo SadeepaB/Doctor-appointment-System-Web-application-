@@ -1,29 +1,22 @@
 <?php
 session_start();
-include("../connection.php"); // Ensure the connection file is included
-
-// Check if the doctor is logged in
+include("../connection.php");
 if (!isset($_SESSION['doctor_id'])) {
     header("Location: ../login.php");
     exit();
 }
 
 $doctor_id = $_SESSION['doctor_id'];
-
-// Initialize variables for form values
 $name = $specialization = $hospital = $email = $password = $new_password = $profile_pic = "";
 $message = "";
 
 // Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sanitize and validate input data
     $name = htmlspecialchars($_POST['name']);
     $specialization = htmlspecialchars($_POST['specialization']);
     $hospital = htmlspecialchars($_POST['hospital']);
     $new_password = htmlspecialchars($_POST['new_password']);
     $confirm_password = htmlspecialchars($_POST['confirm_password']);
-
-    // Check if new password and confirm password match
     if (!empty($new_password) && ($new_password === $confirm_password)) {
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
     } else {
@@ -38,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $file_type = $_FILES['profile_pic']['type'];
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-        // Define allowed file types and max file size (e.g., 5MB)
         $allowed_file_types = ['jpg', 'jpeg', 'png'];
         $max_file_size = 5 * 1024 * 1024;
 
@@ -73,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()) {
        
-        header("Location: doctordashboard.php"); // Redirect to the dashboard
+        header("Location: doctordashboard.php");
         exit();
     } else {
         $_SESSION['message'] = "Error updating profile: " . $stmt->error;
@@ -238,7 +230,6 @@ $con->close();
         </div>
     </div>
 
-    <!-- Include the footer -->
     <?php include('footer.php'); ?>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

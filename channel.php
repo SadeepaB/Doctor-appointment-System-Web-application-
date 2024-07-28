@@ -1,14 +1,13 @@
 <?php
 session_start();
-include("connection.php"); // Ensure this file contains your database connection setup
+include("connection.php");
 
-// Initialize variables
 $user_id = isset($_SESSION['user_id']) ? intval($_SESSION['user_id']) : 0;
 $doctor_id = isset($_GET['doctor_id']) ? intval($_GET['doctor_id']) : 0;
 $message = '';
 $user = $doctor = null;
 
-// Retrieve user details from the database
+// Retrieve user details
 if ($user_id > 0) {
     $stmt = $con->prepare("SELECT first_name, last_name, email, address, mobile_number FROM users WHERE id = ?");
     $stmt->bind_param("i", $user_id);
@@ -19,7 +18,7 @@ if ($user_id > 0) {
     $message = "Invalid user ID.";
 }
 
-// Retrieve doctor details from the database
+// Retrieve doctor details
 if ($doctor_id > 0) {
     $stmt = $con->prepare("SELECT id, name, specialization, hospital, doctor_image FROM doctor WHERE id = ?");
     $stmt->bind_param("i", $doctor_id);
@@ -30,7 +29,6 @@ if ($doctor_id > 0) {
     $message = "Invalid doctor ID.";
 }
 
-// Handle AJAX form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if the appointment already exists for any user
     $stmt = $con->prepare("SELECT COUNT(*) FROM appointment WHERE doctor_id = ? AND date = ? AND time = ?");
@@ -46,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'message' => 'An appointment already exists for this date and time with this doctor.'
         ];
     } else {
-        // Proceed with insertion
         $stmt = $con->prepare("INSERT INTO appointment (user_id, doctor_id, date, time) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("iiss", $user_id, $doctor_id, $_POST['date'], $_POST['time']);
         $success = $stmt->execute();
@@ -62,9 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit();
 }
 function convertPath($path) {
-    // Remove "../" from the beginning of the path
     if (strpos($path, '../') === 0) {
-        $path = substr($path, 3); // Remove the "../" part
+        $path = substr($path, 3);
     }
     return $path;
   }
@@ -210,9 +206,6 @@ function convertPath($path) {
                           <select class="form-control" id="time" name="time" required></select>
                       </div>
                       <div class="col-12 pt-3">
-                          <h6 class="mb-0">Please select date and time</h6>
-                      </div>
-                      <div class="col-12 pt-3">
                           <button type="submit" class="btn btn-primary" style="--bs-btn-padding-y: 10px;--bs-btn-padding-x: 35px; border-radius: 10px;">Book Appointment</button>
                       </div>
                   </div>
@@ -251,7 +244,7 @@ function convertPath($path) {
         const successModal = new bootstrap.Modal(document.getElementById('successModal'));
 
         $('#appointmentForm').on('submit', function (event) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault();
 
             $.ajax({
                 url: $(this).attr('action'),
@@ -288,9 +281,9 @@ function convertPath($path) {
         dateInput.min = tomorrow.toISOString().split('T')[0];
 
         // Populate time input with options from 8 AM to 9 PM in half-hour intervals
-        const startHour = 8; // 8 AM
-        const endHour = 21; // 9 PM
-        const timeStep = 30; // Minutes
+        const startHour = 8; 
+        const endHour = 21;
+        const timeStep = 30;
         
         function padNumber(number) {
             return number.toString().padStart(2, '0');

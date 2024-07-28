@@ -44,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <main class="flex-fill">
 
 <!--Navbar-->
-
   <nav class="navbar navbar-expand-lg sticky-top py-1" style="background-color: #6295a2;">
     <div class="container">
         <a class="navbar-brand" href="index.html">
@@ -167,7 +166,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </div>
 
-<!-- Include the footer -->
 <?php include('footer.php'); ?>
 
 <script src="js/bootstrap.bundle.min.js"></script>

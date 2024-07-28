@@ -1,10 +1,7 @@
 <?php
 session_start();
-include("../connection.php"); // Ensure the connection file is included
-
-// Check if the doctor is logged in
+include("../connection.php");
 if (!isset($_SESSION['doctor_id'])) {
-    // Redirect to the login page if not logged in as doctor
     header("Location: ../login.php");
     exit();
 }
@@ -19,8 +16,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // Fetch the doctor details
-    $doctor = $result->fetch_assoc();
+\    $doctor = $result->fetch_assoc();
 } else {
     echo "No doctor found";
     exit();
@@ -42,7 +38,6 @@ $con->close();
 <body class="d-flex flex-column min-vh-100">
 <main class="flex-fill">
 
-<!--Navbar-->
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg sticky-top py-1" style="background-color: #6295a2;">
         <div class="container">
@@ -145,7 +140,7 @@ $con->close();
 </div>
 
 </main>
-<!-- Include the footer -->
+
 <?php include('footer.php'); ?>
 
 <script src="../js/bootstrap.min.js"></script>

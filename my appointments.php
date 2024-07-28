@@ -62,7 +62,7 @@
     </div>
   </nav>
 
-  <!-- Appointment buttons -->
+  <!-- Appointment -->
   <div class="container my-4">
     <h1 class="text-center" style="color: #6295a2;">My Appointments</h1>
     <div class="text-center mb-4 mt-5">
@@ -70,7 +70,6 @@
       <button class="btn btn-secondary mx-5" id="pastButton">Past Appointments</button>
     </div>
 
-    <!-- Upcoming Appointments Section -->
     <div id="upcomingAppointments" class="section active-section">
         <div class="row">
 

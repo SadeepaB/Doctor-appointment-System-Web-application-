@@ -1,8 +1,6 @@
 <?php
-session_start(); // Start the session to access session variables
-
-// Database connection
-include("connection.php"); // Ensure this file contains your database connection setup
+session_start();
+include("connection.php");
 
 if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
@@ -12,10 +10,7 @@ if ($con->connect_error) {
 $isLoggedIn = isset($_SESSION['user_id']);
 $user_id = $isLoggedIn ? $_SESSION['user_id'] : null;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && $isLoggedIn) {
-    // Debug: Check if POST data is received
-    echo "<script>console.log('POST data received');</script>";
-    
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $isLoggedIn) { 
     $user_name = $_POST['user_name'];
     $user_email = $_POST['user_email'];
     $message = $_POST['message'];
@@ -101,36 +96,29 @@ $con->close();
     </div>
   </nav>
 
-  <!--Cover image--> 
   <div class="container mt-4">
     <img class="img-fluid rounded mx-auto d-block" loading="lazy" src="images/contact.jpg" alt="About 1">
   </div>
 
-  <!--Contact-->
   <div class="d-flex justify-content-center align-items-center mt-5 container mb-5">
     <div class="contact">
     <form style="width: 50rem;" method="post" action="">
       <h3 class="display-4 fw-bold text-primary">Send us a message</h3>
-      <!-- Name input -->
       <div data-mdb-input-init class="form-outline mb-4">
           <input type="text" name="user_name" id="form4Example1" class="form-control text-primary py-4" style="background-color: rgb(195, 225, 255);font-size: 20px; font-style: italic; color: rgb(0, 0, 0) !important;" placeholder="Enter your name"/>
       </div>
-      <!-- Email input -->
       <div data-mdb-input-init class="form-outline mb-4">
           <input type="email" name="user_email" id="form4Example2" class="form-control text-primary py-4" style="background-color: rgb(195, 225, 255);font-size: 20px; font-style: italic; color: rgb(0, 0, 0) !important;" placeholder="Enter your email"/>
       </div>
-      <!-- Message input -->
       <div data-mdb-input-init class="form-outline mb-4">
           <textarea class="form-control bg-" name="message" id="form4Example3" rows="6" style="background-color: rgb(195, 225, 255);font-size: 20px; font-style: italic;color: rgb(0, 0, 0) !important;" placeholder="Enter your message"></textarea>
       </div>
-      <!-- Checkbox -->
       <div class="form-check d-flex justify-content-center mb-4">
           <input class="form-check-input me-2" type="checkbox" name="send_copy" value="1" id="form4Example4" checked />
           <label class="form-check-label" for="form4Example4">
               Send me a copy of this message
           </label>
       </div>
-      <!-- Submit button -->
       <div class="text-center">
           <button data-mdb-ripple-init type="submit" class="btn btn-primary btn-block mb-4 contactsendbutton">Send</button>
       </div>
@@ -138,17 +126,15 @@ $con->close();
     </div>
   </div>
   
-  <!-- Display Feedback and Replies -->
 <!-- Display Feedback and Replies -->
 <div class="container mt-5 mb-5">
     <h3 class="text-primary mb-4">Your Feedback and Replies</h3>
     <div class="row gx-4 gy-4">
         <?php while ($feedback = $feedback_result->fetch_assoc()): ?>
             <?php
-                // Assuming created_at is in 'Y-m-d H:i:s' format
                 $createdAt = new DateTime($feedback['created_at']);
-                $date = $createdAt->format('F j, Y'); // Example: July 27, 2024
-                $time = $createdAt->format('g:i A'); // Example: 2:30 PM
+                $date = $createdAt->format('F j, Y'); 
+                $time = $createdAt->format('g:i A');
             ?>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card border-light shadow-sm rounded-3">
@@ -176,9 +162,6 @@ $con->close();
     </div>
 </div>
 
-
- 
-  <!-- Include the footer -->
   <?php include('footer.php'); ?>
 
 <script src="js/bootstrap.bundle.min.js"></script>

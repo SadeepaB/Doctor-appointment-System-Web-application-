@@ -121,12 +121,12 @@ $con->close();
         }
 
         .btn-primary, .btn-secondary {
-            background-color: #6c757d; /* Default color for non-active buttons */
+            background-color: #6c757d;
             color: white;
         }
 
         .btn-primary.active, .btn-secondary.active {
-            background-color: #007bff; /* Blue color for active button */
+            background-color: #007bff;
             color: white;
         }
     </style>
@@ -166,7 +166,7 @@ $con->close();
         </div>
     </nav>
 
-    <!-- Appointment buttons -->
+    <!-- Appointment -->
     <div class="container my-4">
         <h1 class="text-center" style="color: #6295a2;">My Appointments</h1>
         <div class="text-center mb-4 mt-5">
@@ -279,7 +279,7 @@ $con->close();
     </main>
     <!-- Include the footer -->
     <?php include('footer.php'); ?>
-    <!-- JavaScript to handle section toggling -->
+    <!-- Handle section toggling -->
     <script>
         document.getElementById('upcomingButton').addEventListener('click', function() {
             document.getElementById('upcomingAppointments').classList.add('active-section');
