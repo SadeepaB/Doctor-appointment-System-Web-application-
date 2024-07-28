@@ -12,17 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $password = $_POST['Password'];
     $confirm_password = $_POST['Confirm_Password'];
 
-    // Check if password and confirm password match
     if ($password !== $confirm_password) {
         echo "<script type='text/javascript'>alert('Passwords do not match');</script>";
     } else {
-        // Check if email is unique
         $email_check_query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
         $result = mysqli_query($con, $email_check_query);
         if (mysqli_num_rows($result) > 0) {
             echo "<script type='text/javascript'>alert('Email is already registered');</script>";
         } else {
-            // Hash the password before storing it
+            // Hash the password
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             $query = "INSERT INTO users (first_name, last_name, address, nic, dob, email, mobile_number, password) VALUES ('$first_name', '$last_name', '$address', '$nic', '$dob', '$email', '$mobile_number', '$hashed_password')";
@@ -38,8 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     }
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -157,7 +153,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   </form>
 </div>
 
-  <!-- Include the footer -->
   <?php include('footer.php'); ?>
 
   <script src="js/bootstrap.min.js"></script>

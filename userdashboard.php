@@ -1,8 +1,7 @@
 <?php
 session_start();
-include("connection.php"); // Include your database connection file
+include("connection.php"); 
 
-// Fetch user details
 $user_id = $_SESSION['user_id'];
 $sql = "SELECT * FROM users WHERE id = ?";
 $stmt = mysqli_prepare($con, $sql);
@@ -53,7 +52,6 @@ $user = mysqli_fetch_assoc($result);
                 <a class="nav-link" href="contact us.php">Contact Us</a>
               </li>
               <?php
-              // Check if the user is logged in
               if (isset($_SESSION['user_id'])) {
                   echo '<li class="nav-item d-flex align-items-center">';
                   echo '    <a href="userdashboard.php"><img src="images/profileicon.png" class="rounded-circle img-hover" alt="Profile Image" width="40" height="40"></a>';
@@ -150,7 +148,7 @@ $user = mysqli_fetch_assoc($result);
 </div>
 
 </main>
-<!-- Include the footer -->
+
 <?php include('footer.php'); ?>
 
 <script src="js/bootstrap.min.js"></script>

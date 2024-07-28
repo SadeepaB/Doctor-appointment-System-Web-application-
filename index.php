@@ -30,9 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 function convertPath($path) {
-  // Remove "../" from the beginning of the path
   if (strpos($path, '../') === 0) {
-      $path = substr($path, 3); // Remove the "../" part
+      $path = substr($path, 3);
   }
   return $path;
 }
@@ -224,7 +223,6 @@ function convertPath($path) {
     </div>
   </div>
 
-  <!-- Include the footer -->
   <?php include('footer.php'); ?>
 
   <script src="js/bootstrap.min.js"></script>

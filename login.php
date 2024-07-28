@@ -7,9 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $password = isset($_POST['Password']) ? trim($_POST['Password']) : '';
 
     if (!empty($email) && !empty($password)) {
-        // Function to verify password and set session
+        // Verify password and set session
         function verify_and_set_session($result, $password, $password_hashed = true) {
-            global $user; // Make $user available in the global scope
+            global $user;
             $user = mysqli_fetch_assoc($result);
             $password_valid =password_verify($password, $user['password']);
             if ($password_valid) {
@@ -151,8 +151,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
   </div>
 </div>
 
-
-  <!-- Include the footer -->
   <?php include('footer.php'); ?>
 
   <script src="js/bootstrap.min.js"></script>

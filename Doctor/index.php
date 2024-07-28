@@ -126,6 +126,8 @@ $con->close();
             </div>
         </div>
     </nav>
+
+
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-6">
@@ -235,7 +237,6 @@ $con->close();
     </div>
 </div>
 
-<!-- Include the footer -->
 <?php include('footer.php'); ?>
 <script src="../js/bootstrap.bundle.min.js"></script>
 <script>
