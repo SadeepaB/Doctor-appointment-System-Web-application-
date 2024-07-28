@@ -36,6 +36,20 @@
     filter: invert(5);
 }
 
+/*Card*/
+
+.card-img-top {
+    width: 150px;  /* Set the width of the image */
+    height: 150px; /* Set the height of the image */
+    object-fit: cover; /* Ensure the image covers the area */
+    margin: 0 auto; /* Center the image horizontally */
+}
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+   background-color: #f0f0f0 !important;
+}
+
 /*Footer*/
 .footer-section {
     display: flex;
