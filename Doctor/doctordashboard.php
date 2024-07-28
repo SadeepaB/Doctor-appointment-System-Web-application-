@@ -16,7 +16,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-\    $doctor = $result->fetch_assoc();
+    $doctor = $result->fetch_assoc();
 } else {
     echo "No doctor found";
     exit();
