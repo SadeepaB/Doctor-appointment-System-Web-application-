@@ -12,19 +12,39 @@ $isLoggedIn = isset($_SESSION['admin_id']);
 // Handle removal of user
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] == 'remove_user' && isset($_POST['id'])) {
     $id = $_POST['id'];
-    $stmt = $con->prepare("DELETE FROM users WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    if ($stmt->execute()) {
-        if ($stmt->affected_rows > 0) {
+    $con->begin_transaction();
+    try {
+        // Delete related appointments
+        $stmt1 = $con->prepare("DELETE FROM appointment WHERE user_id = ?");
+        $stmt1->bind_param("i", $id);
+        $stmt1->execute();
+        $stmt1->close();
+
+        // Delete related feedbacks
+        $stmt2 = $con->prepare("DELETE FROM feedback WHERE user_id = ?");
+        $stmt2->bind_param("i", $id);
+        $stmt2->execute();
+        $stmt2->close();
+
+        // Delete the user
+        $stmt3 = $con->prepare("DELETE FROM users WHERE id = ?");
+        $stmt3->bind_param("i", $id);
+        $stmt3->execute();
+
+        if ($stmt3->affected_rows > 0) {
+            $con->commit();
             $message = 'User removed successfully.';
         } else {
+            $con->rollback();
             $message = 'No rows affected.';
         }
-    } else {
-        $message = 'SQL execution error.';
+        $stmt3->close();
+    } catch (Exception $e) {
+        $con->rollback();
+        $message = 'SQL execution error: ' . $e->getMessage();
     }
-    $stmt->close();
 }
+
 
 // Handle AJAX requests for viewing user
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['action']) && $_GET['action'] == 'get_user' && isset($_GET['id'])) {

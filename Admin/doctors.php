@@ -343,10 +343,10 @@ $con->close();
                                     <button class="btn btn-outline-primary view-doctor" data-id="<?php echo $doctor['id']; ?>" data-bs-toggle="modal" data-bs-target="#viewDoctorModal">
                                         <i class="fas fa-eye"></i> View
                                     </button>
-                                    <button class="btn btn-outline-primary edit-doctor" data-id="<?php echo $doctor['id']; ?>" data-bs-toggle="modal" data-bs-target="#editDoctorModal">
+                                    <button class="btn btn-outline-warning edit-doctor" data-id="<?php echo $doctor['id']; ?>" data-bs-toggle="modal" data-bs-target="#editDoctorModal">
                                         <i class="fas fa-edit"></i> Edit
                                     </button>
-                                    <button class="btn btn-outline-primary remove-doctor" data-id="<?php echo $doctor['id']; ?>" data-bs-toggle="modal" data-bs-target="#removeDoctorModal">
+                                    <button class="btn btn-outline-danger remove-doctor" data-id="<?php echo $doctor['id']; ?>" data-bs-toggle="modal" data-bs-target="#removeDoctorModal">
                                         <i class="fas fa-trash"></i> Remove
                                     </button>
                                 </td>
