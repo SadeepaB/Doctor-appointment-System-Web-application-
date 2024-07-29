@@ -26,10 +26,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt = mysqli_prepare($con, $sql);
             mysqli_stmt_bind_param($stmt, 'ssssssi', $firstName, $lastName, $address, $nic, $dob, $hashedPassword, $user_id);
         } else {
-            echo "<script>
-                    alert('Passwords do not match.');
-                    window.history.back();
-                  </script>";
+            echo "<script type='text/javascript'>
+            alert('Passwords do not match');
+            window.location.href = 'userdashboard2.php';
+            </script>";
             exit();
         }
     } else {
@@ -40,13 +40,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (mysqli_stmt_execute($stmt)) {
         echo "<script>
-                alert('Profile updated successfully!');
-                window.location.href = 'userdashboard.php';
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Profile updated successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(function() {
+                        window.location.href = 'userdashboard.php';
+                    });
+                });
               </script>";
     } else {
         echo "<script>
-                alert('Error: " . mysqli_error($con) . "');
-                window.history.back();
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Error: " . mysqli_error($con) . "',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    }).then(function() {
+                        window.history.back();
+                    });
+                });
               </script>";
     }
 }
@@ -60,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <main class="flex-fill">
