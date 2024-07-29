@@ -45,7 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         title: 'Success',
                         text: 'Profile updated successfully!',
                         icon: 'success',
-                        confirmButtonText: 'OK'
+                        showConfirmButton: false,
+                        timer: 1500,
                     }).then(function() {
                         window.location.href = 'userdashboard.php';
                     });
