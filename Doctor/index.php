@@ -50,7 +50,7 @@ $all_appointments = $all_appointments_result->fetch_assoc()['all_appointments'];
 $appointments_query = "SELECT a.*, u.first_name, u.last_name 
                        FROM appointment a 
                        JOIN users u ON a.user_id = u.id 
-                       WHERE a.doctor_id = ? AND a.date > CURDATE() OR (a.date = CURDATE() AND a.time > CURRENT_TIME)
+                       WHERE a.doctor_id = ? AND (a.date > CURDATE() OR (a.date = CURDATE() AND a.time > CURRENT_TIME))
                        ORDER BY a.date, a.time";
 $stmt = $con->prepare($appointments_query);
 $stmt->bind_param("i", $doctor_id);
