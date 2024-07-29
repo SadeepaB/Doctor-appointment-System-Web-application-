@@ -36,8 +36,8 @@ $user = mysqli_fetch_assoc($result);
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav ms-auto align-items-center">
-              <li class="nav-item active">
-                <a class="nav-link active" href="index.php">Home</a>
+              <li class="nav-item">
+                <a class="nav-link" href="index.php">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="about.php">About</a>

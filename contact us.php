@@ -19,9 +19,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $isLoggedIn) {
     $stmt->bind_param("isss", $user_id, $user_name, $user_email, $message);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Your message has been sent successfully!');</script>";
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Message Sent!',
+                    text: 'Your message has been sent successfully!',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'contact us.php';
+                    }
+                });
+            });
+        </script>";
     } else {
-        echo "<script>alert('Error: " . $stmt->error . "');</script>";
+        echo "<script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error: " . $stmt->error . "',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>";
     }
 
     $stmt->close();
@@ -47,6 +69,7 @@ $con->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -165,6 +188,7 @@ $con->close();
   <?php include('footer.php'); ?>
 
 <script src="js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 </body>
 </html>

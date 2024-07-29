@@ -134,9 +134,6 @@ $feedback_result = $con->query($feedback_query);
     </div>
 </div>
 
-
-
-
 </main>
 <!-- Include the footer -->
 <?php include('footer.php'); ?>

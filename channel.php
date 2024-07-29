@@ -75,6 +75,7 @@ function convertPath($path) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -255,11 +256,19 @@ function convertPath($path) {
                     if (result.success) {
                         successModal.show();
                     } else {
-                        alert('Failed to book appointment: ' + result.message);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed to book appointment',
+                            text: result.message,
+                        });
                     }
                 },
                 error: function () {
-                    alert('An error occurred while booking the appointment.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error occurred',
+                        text: 'An error occurred while booking the appointment.',
+                    });
                 }
             });
         });

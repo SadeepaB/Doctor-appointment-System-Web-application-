@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("connection.php"); 
+include("connection.php");
 
 $user_id = $_SESSION['user_id'];
 $sql = "SELECT * FROM users WHERE id = ?";
@@ -14,22 +14,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName = htmlspecialchars($_POST['first_name']);
     $lastName = htmlspecialchars($_POST['last_name']);
     $address = htmlspecialchars($_POST['address']);
-    $nic =  htmlspecialchars($_POST['nic']);
+    $nic = htmlspecialchars($_POST['nic']);
     $dob = htmlspecialchars($_POST['dob']);
+    $password = $_POST['password'];
+    $confirmPassword = $_POST['confirm_password'];
 
-    $sql = "UPDATE users SET first_name = ?, last_name = ?, address = ?, nic = ?, dob = ? WHERE id = ?";
-    $stmt = mysqli_prepare($con, $sql);
-    mysqli_stmt_bind_param($stmt, 'sssssi', $firstName, $lastName, $address, $nic, $dob, $user_id);
+    if (!empty($password)) {
+        if ($password === $confirmPassword) {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "UPDATE users SET first_name = ?, last_name = ?, address = ?, nic = ?, dob = ?, password = ? WHERE id = ?";
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, 'ssssssi', $firstName, $lastName, $address, $nic, $dob, $hashedPassword, $user_id);
+        } else {
+            echo "<script>
+                    alert('Passwords do not match.');
+                    window.history.back();
+                  </script>";
+            exit();
+        }
+    } else {
+        $sql = "UPDATE users SET first_name = ?, last_name = ?, address = ?, nic = ?, dob = ? WHERE id = ?";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, 'sssssi', $firstName, $lastName, $address, $nic, $dob, $user_id);
+    }
 
     if (mysqli_stmt_execute($stmt)) {
-        header("Location: userdashboard.php");
-        exit();
+        echo "<script>
+                alert('Profile updated successfully!');
+                window.location.href = 'userdashboard.php';
+              </script>";
     } else {
-        echo "Error: " . mysqli_error($con);
+        echo "<script>
+                alert('Error: " . mysqli_error($con) . "');
+                window.history.back();
+              </script>";
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,8 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav ms-auto align-items-center">
-              <li class="nav-item active">
-                <a class="nav-link active" href="index.php">Home</a>
+              <li class="nav-item">
+                <a class="nav-link" href="index.php">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="about.php">About</a>
@@ -109,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <div class="col-lg-8">
-                <form method="POST" action="">
+                <form name="profileForm" method="POST" action="" onsubmit="return validateForm()">
                     <div class="card mt-lg-5" style="transform: none;">
                         <div class="card-body">
                             <div class="row mb-3">
@@ -152,6 +173,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <input type="text" class="form-control" name="dob" value="<?php echo htmlspecialchars($user['dob']); ?>">
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">New Password</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="password" class="form-control" name="password" placeholder="Enter new password if you want to change it">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Confirm Password</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="password" class="form-control" name="confirm_password" placeholder="Confirm new password">
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-9 text-secondary">
@@ -167,7 +204,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <?php include('footer.php'); ?>
-
 <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
