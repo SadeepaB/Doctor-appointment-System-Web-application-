@@ -16,9 +16,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("si", $reply, $feedback_id);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Reply sent successfully!');</script>";
+        echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Reply sent successfully!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                });
+              </script>";
     } else {
-        echo "<script>alert('Error: " . $stmt->error . "');</script>";
+        echo "<script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Error: " . $stmt->error . "',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+              </script>";
     }
 
     $stmt->close();
@@ -27,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $feedback_query = "SELECT feedback.*, users.first_name, users.last_name FROM feedback JOIN users ON feedback.user_id = users.id";
 $feedback_result = $con->query($feedback_query);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +56,7 @@ $feedback_result = $con->query($feedback_query);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <main class="flex-fill">
