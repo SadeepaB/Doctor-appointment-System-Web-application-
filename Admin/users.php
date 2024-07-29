@@ -2,14 +2,31 @@
 session_start();
 include("../connection.php");
 
-if (!isset($_SESSION['admin_id'])){
+if (!isset($_SESSION['admin_id'])) {
     header("Location: ../login.php");
     exit();
 }
 
 $isLoggedIn = isset($_SESSION['admin_id']);
 
-// Handle AJAX requests
+// Handle removal of user
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] == 'remove_user' && isset($_POST['id'])) {
+    $id = $_POST['id'];
+    $stmt = $con->prepare("DELETE FROM users WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    if ($stmt->execute()) {
+        if ($stmt->affected_rows > 0) {
+            $message = 'User removed successfully.';
+        } else {
+            $message = 'No rows affected.';
+        }
+    } else {
+        $message = 'SQL execution error.';
+    }
+    $stmt->close();
+}
+
+// Handle AJAX requests for viewing user
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['action']) && $_GET['action'] == 'get_user' && isset($_GET['id'])) {
     $id = $_GET['id'];
     $stmt = $con->prepare("SELECT * FROM users WHERE id = ?");
@@ -18,20 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['action']) && $_GET['acti
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
     echo json_encode($user);
-    exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] == 'remove_user' && isset($_POST['id'])) {
-    $id = $_POST['id'];
-    $stmt = $con->prepare("DELETE FROM users WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    if ($stmt->affected_rows > 0) {
-        echo json_encode(['status' => 'success']);
-    } else {
-        echo json_encode(['status' => 'error']);
-    }
-    $stmt->close();
     exit();
 }
 
@@ -55,6 +58,7 @@ $count_result = $con->query("SELECT COUNT(*) as count FROM users");
 $count_row = $count_result->fetch_assoc();
 $user_count = $count_row['count'];
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -135,7 +139,7 @@ $user_count = $count_row['count'];
                                         <button class="btn btn-outline-primary view-user" data-id="<?php echo $user['id']; ?>" data-bs-toggle="modal" data-bs-target="#viewUserModal">
                                             <i class="fas fa-eye"></i> View
                                         </button>
-                                        <button class="btn btn-outline-primary remove-user" data-id="<?php echo $user['id']; ?>" data-bs-toggle="modal" data-bs-target="#removeUserModal">
+                                        <button class="btn btn-outline-danger remove-user" data-id="<?php echo $user['id']; ?>" data-bs-toggle="modal" data-bs-target="#removeUserModal">
                                             <i class="fas fa-trash"></i> Remove
                                         </button>
                                     </td>
@@ -187,7 +191,7 @@ $user_count = $count_row['count'];
                     </div>
                     <div class="modal-body">
                         <p>Are you sure you want to remove this user?</p>
-                        <form id="removeUserForm" method="POST" action="">
+                        <form method="POST" action="">
                             <input type="hidden" id="removeUserId" name="id" value="">
                             <input type="hidden" name="action" value="remove_user">
                             <button type="submit" class="btn btn-danger">Remove</button>
@@ -197,6 +201,13 @@ $user_count = $count_row['count'];
                 </div>
             </div>
         </div>
+
+        <!-- Display Message -->
+        <?php if (isset($message)): ?>
+            <div class="alert alert-info mt-3" role="alert">
+                <?php echo htmlspecialchars($message); ?>
+            </div>
+        <?php endif; ?>
     </main>
 
     <!-- Include the footer -->
@@ -218,6 +229,9 @@ $user_count = $count_row['count'];
                             document.getElementById('userNicView').textContent = user.nic;
                             document.getElementById('userDobView').textContent = user.dob;
                             document.getElementById('userMobileView').textContent = user.mobile_number;
+                        })
+                        .catch(error => {
+                            console.error('Error fetching user:', error);
                         });
                 });
             });
@@ -228,22 +242,6 @@ $user_count = $count_row['count'];
                     const userId = this.getAttribute('data-id');
                     document.getElementById('removeUserId').value = userId;
                 });
-            });
-
-            document.getElementById('removeUserForm').addEventListener('submit', function (event) {
-                event.preventDefault();
-                const formData = new FormData(this);
-                fetch('users.php', {
-                    method: 'POST',
-                    body: formData
-                }).then(response => response.json())
-                  .then(result => {
-                      if (result.status === 'success') {
-                          window.location.reload();
-                      } else {
-                          alert('Error removing user. Please try again.');
-                      }
-                  });
             });
         });
     </script>
