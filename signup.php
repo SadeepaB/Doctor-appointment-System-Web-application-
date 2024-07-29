@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("connection.php");
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $first_name = $_POST['First_Name'];
     $last_name = $_POST['Last_Name'];
@@ -15,9 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($password !== $confirm_password) {
         echo "<script type='text/javascript'>alert('Passwords do not match');</script>";
     } else {
-        $email_check_query = "SELECT * FROM users WHERE email='$email' LIMIT 1";
-        $result = mysqli_query($con, $email_check_query);
-        if (mysqli_num_rows($result) > 0) {
+        $email_check_query_user = "SELECT * FROM users WHERE email='$email' LIMIT 1";
+        $email_check_query_admin = "SELECT * FROM admin WHERE email='$email' LIMIT 1";
+        $email_check_query_doctor = "SELECT * FROM doctor WHERE email='$email' LIMIT 1";
+        
+        $result_user = mysqli_query($con, $email_check_query_user);
+        $result_admin = mysqli_query($con, $email_check_query_admin);
+        $result_doctor = mysqli_query($con, $email_check_query_doctor);
+
+        if (mysqli_num_rows($result_user) > 0 || mysqli_num_rows($result_admin) > 0 || mysqli_num_rows($result_doctor) > 0) {
             echo "<script type='text/javascript'>alert('Email is already registered');</script>";
         } else {
             // Hash the password
