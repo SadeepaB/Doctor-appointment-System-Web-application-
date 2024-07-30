@@ -26,7 +26,7 @@ if (isset($_GET['cancel_appointment_id']) && is_numeric($_GET['cancel_appointmen
     $stmt->bind_param("ii", $appointmentIdToCancel, $doctor_id);
     $stmt->execute();
     if ($stmt->affected_rows > 0) {
-        
+        $msg = "Appointment canceled successfully.";
     } else {
         $msg = "Error canceling appointment.";
     }
@@ -59,9 +59,14 @@ $sqlPast = "SELECT
                 a.appointment_id,
                 a.date AS booking_date,
                 a.time,
+                u.first_name,
+                u.last_name,
+                TIMESTAMPDIFF(YEAR, u.dob, CURDATE()) AS age,
                 a.created_at
             FROM 
                 appointment a
+            JOIN
+                users u ON a.user_id = u.id
             WHERE 
                 a.doctor_id = ? AND (a.date < CURDATE() OR (a.date = CURDATE() AND a.time < CURTIME()))
             ORDER BY 
@@ -227,9 +232,11 @@ $con->close();
                 if ($resultPast->num_rows > 0) {
                     while($row = $resultPast->fetch_assoc()) {
                         $appointmentId = $row['appointment_id'];
-                        $createdAt = $row['created_at'];
+                        $patientName = $row['first_name'] . ' ' . $row['last_name'];
+                        $patientAge = $row['age'];
                         $scheduleDate = $row['booking_date'];
                         $time = $row['time'];
+                        $createdAt = $row['created_at'];
                         $dateTime = new DateTime($createdAt);
                         $createdDate = $dateTime->format('Y-m-d');
                         echo "
