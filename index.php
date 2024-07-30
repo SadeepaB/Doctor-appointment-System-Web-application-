@@ -248,6 +248,18 @@ function convertPath($path) {
             }, 500);
         <?php endif; ?>
     });
+
+        document.addEventListener('DOMContentLoaded', function () {
+        var dateInput = document.getElementById('date');
+        var today = new Date();
+        var tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var year = tomorrow.getFullYear();
+        var month = ('0' + (tomorrow.getMonth() + 1)).slice(-2);
+        var day = ('0' + tomorrow.getDate()).slice(-2);
+        var minDate = year + '-' + month + '-' + day;
+        dateInput.setAttribute('min', minDate);
+    });
 </script>
 
 </body>

@@ -17,6 +17,9 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $admin = mysqli_fetch_assoc($result);
 
+$update_success = false;
+$error_message = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = htmlspecialchars($_POST['name']);
     $email = htmlspecialchars($_POST['email']);
@@ -37,10 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (mysqli_stmt_execute($stmt)) {
-        header("Location: admin_profile.php");
-        exit();
+        $update_success = true;
     } else {
-        echo "Error: " . mysqli_error($con);
+        $error_message = "Error: " . mysqli_error($con);
     }
 }
 ?>
@@ -54,6 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <main class="flex-fill">
@@ -158,5 +161,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php include('footer.php'); ?>
 
 <script src="../js/bootstrap.bundle.min.js"></script>
+<script>
+<?php if ($update_success) { ?>
+    Swal.fire({
+        icon: 'success',
+        title: 'Profile Updated',
+        text: 'Your profile has been successfully updated.',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location = 'admin_profile.php';
+        }
+    });
+<?php } elseif (!empty($error_message)) { ?>
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: '<?php echo $error_message; ?>',
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'OK'
+    });
+<?php } ?>
+</script>
 </body>
 </html>
