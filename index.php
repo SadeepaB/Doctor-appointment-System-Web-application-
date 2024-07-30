@@ -12,22 +12,24 @@ $result = null;
 $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (!empty($doctor_name) || !empty($specialization) || !empty($hospital) || !empty($date)) {
-        $query = "SELECT * FROM doctor WHERE 1=1";
+  // Check if at least one of the search fields is not empty
+  if ((!empty($doctor_name) || !empty($specialization) || !empty($hospital)) || (!empty($date) && (!empty($doctor_name) || !empty($specialization) || !empty($hospital)))) {
+      $query = "SELECT * FROM doctor WHERE 1=1";
 
-        if (!empty($doctor_name)) {
-            $query .= " AND name LIKE '%" . mysqli_real_escape_string($con, $doctor_name) . "%'";
-        }
-        if (!empty($specialization)) {
-            $query .= " AND specialization LIKE '%" . mysqli_real_escape_string($con, $specialization) . "%'";
-        }
-        if (!empty($hospital)) {
-            $query .= " AND hospital LIKE '%" . mysqli_real_escape_string($con, $hospital) . "%'";
-        }
-        $result = mysqli_query($con, $query);
-    } else {
-        $message = "Please fill in at least one field to search.";
-    }
+      if (!empty($doctor_name)) {
+          $query .= " AND name LIKE '%" . mysqli_real_escape_string($con, $doctor_name) . "%'";
+      }
+      if (!empty($specialization)) {
+          $query .= " AND specialization LIKE '%" . mysqli_real_escape_string($con, $specialization) . "%'";
+      }
+      if (!empty($hospital)) {
+          $query .= " AND hospital LIKE '%" . mysqli_real_escape_string($con, $hospital) . "%'";
+      }
+      
+      $result = mysqli_query($con, $query);
+  } else {
+      $message = "Please fill in at least one field to search.";
+  }
 }
 function convertPath($path) {
   if (strpos($path, '../') === 0) {

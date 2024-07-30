@@ -32,7 +32,7 @@ $stmt->execute();
 $all_patients_result = $stmt->get_result();
 $total_patients = $all_patients_result->fetch_assoc()['total_patients'];
 
-$new_appointments_query = "SELECT COUNT(*) AS new_appointments FROM appointment WHERE doctor_id = ? AND date >= CURDATE()";
+$new_appointments_query = "SELECT COUNT(*) AS new_appointments FROM appointment WHERE doctor_id = ? AND (date > CURDATE() OR (date = CURDATE() AND time > CURRENT_TIME))";
 $stmt = $con->prepare($new_appointments_query);
 $stmt->bind_param("i", $doctor_id);
 $stmt->execute();
